@@ -1,0 +1,58 @@
+determine_fail_het = function(het, sd) {
+  sdMeanHet = sd(het$meanHet)
+  meanMeanHet = mean(het$meanHet)
+  b1 = meanMeanHet+sd*sdMeanHet
+  b2 = meanMeanHet-sd*sdMeanHet
+  outliers = which(het$meanHet > b1 | het$meanHet < b2)
+  return(data.frame(IID=het[outliers, "IID"]))
+}
+
+args <- commandArgs(trailingOnly = TRUE)
+result_dir = args[1]
+file_name = args[2]
+e1l = args[3]
+e1u = args[4]
+e2l = args[5]
+e2u = args[6]
+
+fail_sex = read.table(paste(result_dir, "/fail-sexcheck.txt", sep=""), col.names="IID")
+fail_miss = read.table(paste(result_dir, "/fail-missingness.txt", sep=""), col.names="IID")
+
+het = read.table(paste(result_dir, "/", file_name, ".het", sep=""), h=T)
+het$meanHet = (het$N.NM. - het$O.HOM.) / het$N.NM.
+
+fail_het2 = determine_fail_het(het, 2)
+fail_het3 = determine_fail_het(het, 3)
+fail_het4 = determine_fail_het(het, 4)
+fail_het5 = determine_fail_het(het, 5)
+fail_het6 = determine_fail_het(het, 6)
+
+fail_ibd = read.table(paste(result_dir, "/fail-IBD-QC.txt", sep=""), col.names=c("FID", "IID"))
+fail_ibd$FID = NULL
+
+evec = read.table(paste(result_dir, "/", file_name, ".evec", sep=""))
+colnames(evec)=c("IID","E1","E2","E3","E4","E5","E6","E7","E8","E9","E10","GROUP")
+fail_pca = data.frame(IID=evec[which((evec$E1 < e1l | evec$E1 > e1u |
+                                     evec$E2 < e2l | evec$E2 > e2u) & 
+                  (evec$GROUP == "Case" | evec$GROUP == "Control")), "IID"])
+
+# merge
+fail_any = merge(fail_sex, fail_miss, all=T)
+fail_any = merge(fail_any, fail_het2, all=T)
+fail_any = merge(fail_any, fail_het3, all=T)
+fail_any = merge(fail_any, fail_het4, all=T)
+fail_any = merge(fail_any, fail_het5, all=T)
+fail_any = merge(fail_any, fail_het6, all=T)
+fail_any = merge(fail_any, fail_ibd,  all=T)
+fail_any = merge(fail_any, fail_pca,  all=T)
+
+fail_any$fail_sex  = fail_any$IID %in% fail_sex$IID
+fail_any$fail_het2 = fail_any$IID %in% fail_het2$IID
+fail_any$fail_het3 = fail_any$IID %in% fail_het3$IID
+fail_any$fail_het4 = fail_any$IID %in% fail_het4$IID
+fail_any$fail_het5 = fail_any$IID %in% fail_het5$IID
+fail_any$fail_het6 = fail_any$IID %in% fail_het6$IID
+fail_any$fail_ibd  = fail_any$IID %in% fail_ibd$IID
+fail_any$fail_pca  = fail_any$IID %in% fail_pca$IID
+
+write.table(fail_any, paste(result_dir, "/fail-table.csv", sep=""), row.names=F, col.names=T, quote=T, sep=";")
