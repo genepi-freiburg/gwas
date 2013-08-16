@@ -43,7 +43,7 @@ grep ".* markers to be included from" ${LOG_DIR}/rawdata.log >> ${SUMMARY_FILE}
 grep ".* SNPs with no founder genotypes observed" ${LOG_DIR}/rawdata.log >> ${SUMMARY_FILE}
 echo >> ${SUMMARY_FILE}
 
-if [-f "${LOG_DIR}/nofounders.log" ]
+if [ -f "${LOG_DIR}/nofounders.log" ]
 then
 	echo "SNP STATISTICS (AFTER NOF PRUNING)" >> ${SUMMARY_FILE}
 	egrep "After frequency and genotyping pruning, there are [0-9]+ SNPs" ${LOG_DIR}/nofounders.log >> ${SUMMARY_FILE}
