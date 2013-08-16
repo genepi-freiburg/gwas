@@ -1,0 +1,14 @@
+genotypename: TEMP_DIR/07-merge-hapmap.eigenstratgeno
+snpname:      TEMP_DIR/07-merge-hapmap.snp
+indivname:    TEMP_DIR/07-merge-hapmap.ind
+evecoutname:  TEMP_DIR/08-merge-hapmap.evec
+evaloutname:  TEMP_DIR/08-merge-hapmap.eval
+altnormstyle: NO
+numoutevec:     10
+numoutlieriter: 0
+numoutlierevec: 2
+outliersigmathresh: 8.0
+qtmode: 0
+nsnpldregress: 2
+outlieroutname: TEMP_DIR/08-merge-hapmap.outlier
+

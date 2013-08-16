@@ -1,0 +1,8 @@
+genotypename:    TEMP_DIR/06-merge-hapmap.ped
+snpname:         TEMP_DIR/06-merge-hapmap.map
+indivname:       TEMP_DIR/06-merge-hapmap.ped
+outputformat:    EIGENSTRAT
+genotypeoutname: TEMP_DIR/07-merge-hapmap.eigenstratgeno
+snpoutname:      TEMP_DIR/07-merge-hapmap.snp
+indivoutname:    TEMP_DIR/07-merge-hapmap.ind
+familynames:     NO

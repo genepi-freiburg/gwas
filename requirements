@@ -1,0 +1,7 @@
+R package geneplotter (installed local)
+
+- proxy: export http_proxy="http://proxy.imbi.uni-freiburg.de:8080/"
+- lib DBI: install.packages("DBI")
+- geneplotter:
+    source("http://bioconductor.org/biocLite.R")
+    biocLite("geneplotter")
