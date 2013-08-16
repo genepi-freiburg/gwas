@@ -24,17 +24,17 @@ log "filter non-founder SNPs"
 log "perform sex check"
 . ${SCRIPT_DIR}/01-sexcheck.sh
 
-#log "perform missingness analysis"
-#. ${SCRIPT_DIR}/02-missingness.sh
+log "perform missingness analysis"
+. ${SCRIPT_DIR}/02-missingness.sh
 
-#log "perform heterozygosity analysis"
-#. ${SCRIPT_DIR}/03-heterozygosity.sh
+log "perform heterozygosity analysis"
+. ${SCRIPT_DIR}/03-heterozygosity.sh
 
-#log "plot heterozygosity and missingness"
-#. ${SCRIPT_DIR}/04-plot-het-miss.sh
+log "plot heterozygosity and missingness"
+. ${SCRIPT_DIR}/04-plot-het-miss.sh
 
-#log "perform cryptic relatedness analysis"
-#. ${SCRIPT_DIR}/05-relatedness.sh
+log "perform cryptic relatedness analysis"
+. ${SCRIPT_DIR}/05-relatedness.sh
 
 log "perform PCA"
 . ${SCRIPT_DIR}/06-pca.sh
