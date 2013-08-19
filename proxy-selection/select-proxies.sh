@@ -36,6 +36,7 @@ ${PLINK} --noweb \
 	--ld-window-r2 0.2 \
 	--ld-window 999999 \
 	--ld-snp ${ORIGINAL_SNP} \
+	--filter-founders \
 	--out ${WORKING_DIR}/proxy-snps >&2
 
 # sortieren und ausgeben
