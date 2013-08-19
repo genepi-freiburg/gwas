@@ -1,36 +1,78 @@
 DIR=${0%/*}
 . ${DIR}/parameters.sh
-. ${DIR}/threshold-defaults.sh
 
-#. ${USER_THRESHOLD_FILE}
-
-echo "Using MAF ${MAF}"
-
-if [ "${USE_IMISS_FILTER}" -eq "1"]
+FAIL_INDIV=$3
+if [ "${FAIL_INDIV}" == "" ]
 then
-	echo "Using IMISS ${IMISS}"
+	echo "Usage: $0 path basename fail-indiv-file"
+	exit 9
 fi
 
-# individuals heterozygosity (SD from mean)
-USE_HET_FILTER=1
-HET=4
+INTERMED_FILE=${TEMP_DIR}/filtered
 
-# IBD border
-USE_IBD_FILTER=1
-IBD=0.185
+log_stats() {
+	cat ${INTERMED_FILE}.log | egrep "^[0-9]+ cases, .* controls and .* missing" >> ${MAIN_LOG_FILE}
+	cat ${INTERMED_FILE}.log | egrep "^[0-9]+ males, .* females, and .* of unspecified sex" >> ${MAIN_LOG_FILE}
+        cat ${INTERMED_FILE}.log | egrep "After frequency and genotyping pruning, there are [0-9]+ SNPs" >> ${MAIN_LOG_FILE}
+}
 
-# PCA filter
-USE_PC_FILTER=1
-PC1_MIN=
-PC1_MAX=
-PC2_MIN=
-PC2_MAX=
+echo "Using failing individual file: ${FAIL_INDIV}"
 
-# SNP genotyping rate (callrate)
-USE_GENO_FILTER=1
-GENO=0.90
+echo -n "MAF filter [${MAF_DEFAULT}]: "
+read MAF
+if [ "${MAF}" == "" ]
+then
+	MAF=${MAF_DEFAULT}
+fi
 
-# SNP minor allele frequency
-USE_MAF_FILTER=1
-MAF=0.001
+echo -n "GENO filter (callrate) [${GENO_DEFAULT}]: "
+read GENO
+if [ "${GENO}" == "" ]
+then
+	GENO=${GENO_DEFAULT}
+fi
+
+echo -n "HWE filter []: "
+read HWE
+
+log "filter individuals"
+. ${SCRIPT_DIR}/filter/01-filter-individuals.sh
+log_stats
+
+if [ "${MAF}" != "" ]
+then
+	log "apply MAF filter ${MAF}"
+	. ${SCRIPT_DIR}/filter/02-maf-filter.sh
+	log_stats
+else
+	log "no MAF filter"
+fi
+
+if [ "${GENO}" != "" ]
+then
+        log "apply GENO filter ${GENO}"
+        . ${SCRIPT_DIR}/filter/03-geno-filter.sh
+	log_stats
+else
+	log "no GENO filter"
+fi
+
+if [ "${HWE}" != "" ]
+then
+	log "apply HWE filter ${HWE}"
+        log_stats
+else
+	log "no HWE filter"
+fi
+
+if [ -f "${INTERMED_FILE}.hh" ]
+then
+	log "remove heterozygous haploid SNPs"
+        . ${SCRIPT_DIR}/filter/05-haploid-filter.sh
+	log_stats
+fi
+
+mv ${TEMP_DIR}/filtered.bed ${SOURCE_FILE}_final.bed
+mv ${TEMP_DIR}/filtered.bim ${SOURCE_FILE}_final.bim
+mv ${TEMP_DIR}/filtered.fam ${SOURCE_FILE}_final.fam
 
