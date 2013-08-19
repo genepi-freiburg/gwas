@@ -43,4 +43,4 @@ echo "CHR POS_1 RSID_1 POS_2 RSID_2 R2 DIST"
 tail -n+2 ${WORKING_DIR}/proxy-snps.ld | awk \
 	'function abs(x) { return ((x < 0.0) ? -x : x) } 
          { print $1 "\t" $2 "\t" $3 "\t" $5 "\t" $6 "\t" $7 "\t" abs($5-$2) }' \
-	| sort -k 6rn,7n
+	| sort -k6,6rn -k7,7n | head -n 20
