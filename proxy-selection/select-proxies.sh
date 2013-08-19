@@ -19,7 +19,7 @@ WINDOW_SIZE=250
 PLINK=/usr/lib/plink/plink
 
 echo -n "Determine chromosome for ${ORIGINAL_SNP}: " >&2
-CHR=`grep ${ORIGINAL_SNP} ${KGP_DATA}.bim | cut -f 1`
+CHR=`grep "\\s${ORIGINAL_SNP}\\s" ${KGP_DATA}.bim | cut -f 1`
 echo "${ORIGINAL_SNP} is on chromosome ${CHR}." >&2
 
 echo "Searching for proxies for ${ORIGINAL_SNP} (window size ${WINDOW_SIZE} kb)" >&2
