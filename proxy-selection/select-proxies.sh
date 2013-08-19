@@ -39,7 +39,7 @@ ${PLINK} --noweb \
 	--out ${WORKING_DIR}/proxy-snps >&2
 
 # sortieren und ausgeben
-echo "CHR POS_1 RSID_1 POS_2 RSID_2 R2 DIST"
+echo -e "CHR\tPOS_1\tRSID_1\tPOS_2\tRSID_2\tR2\tDIST"
 tail -n+2 ${WORKING_DIR}/proxy-snps.ld | awk \
 	'function abs(x) { return ((x < 0.0) ? -x : x) } 
          { print $1 "\t" $2 "\t" $3 "\t" $5 "\t" $6 "\t" $7 "\t" abs($5-$2) }' \
