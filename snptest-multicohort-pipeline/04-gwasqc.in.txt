@@ -28,10 +28,3 @@ PREFIX	 qc-
 #BOXPLOTWIDTH	    N
 
 # Input files and its short name for plotting
-PROCESS turks_4c.gwas
-PROCESS turks_escape.gwas
-PROCESS whites_4c.gwas
-PROCESS whites_escape.gwas
-PROCESS whites_ckid.gwas
-PROCESS africans_ckid.gwas
-

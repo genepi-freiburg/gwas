@@ -21,4 +21,8 @@ mkdir -p ${LOG_DIR}
 # SNPtest
 . ${SCRIPT_DIR}/02-snptest.sh
 
+# Formatting
+. ${SCRIPT_DIR}/03-formatting.sh
 
+# gwasqc
+- ${SCRIPT_DIR}/04-run-gwasqc.sh

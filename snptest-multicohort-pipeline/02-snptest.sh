@@ -44,6 +44,7 @@ ${SNPTEST} \
 	-hwe \
 	-pheno ${PHEN} \
 	-lower_sample_limit 50 \
+	-assume_chromosome ${CHR} \
 	-cov_names ${COV} \
 	-log ${DATA_DIR}/log/snptest-adjusted-${FN}-chr${CHR}.log \
 	>/dev/null &
@@ -60,6 +61,7 @@ ${SNPTEST} \
         -hwe \
         -pheno ${PHEN} \
         -lower_sample_limit 50 \
+        -assume_chromosome ${CHR} \
         -log ${DATA_DIR}/log/snptest-unadjusted-${FN}-chr${CHR}.log \
         >/dev/null &
 
@@ -119,4 +121,6 @@ done
 echo "File ${FN} done"
 done
 
+echo "Waiting for remaining jobs"
+wait
 echo Done
