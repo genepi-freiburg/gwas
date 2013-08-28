@@ -1,8 +1,10 @@
 PROCESS_NAME="snptest"
-PROCESS_LIMIT="15"
+PROCESS_LIMIT="16"
 PROCESS_COUNT="-1"
 SLEEP_TIME="5"
 DEBUG="0"
+
+sleep 5
 
 while [ "${PROCESS_COUNT}" -eq "-1" -o "${PROCESS_COUNT}" -ge "${PROCESS_LIMIT}" ]
 do

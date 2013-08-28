@@ -1,13 +1,13 @@
 CHRS="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22"
 
-mkdir -p ${DATA_DIR}/adjusted
-mkdir -p ${DATA_DIR}/unadjusted
-
 for FN in ${COHORTS}
 do
 
 for PHEN in ${PHENOTYPE_NAMES}
 do
+
+mkdir -p ${DATA_DIR}/${PHEN}/adjusted
+mkdir -p ${DATA_DIR}/${PHEN}/unadjusted
 
 EIGEN=""
 EIGENS=`cat ${COVARIATE_FILE} | grep ${FN} | grep ${PHEN} | cut -f 3 -d ' '`
@@ -38,7 +38,7 @@ echo "Using SAMPLE file: ${DATA_DIR}/sample/${FN}.sample"
 
 ${SNPTEST} \
 	-data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
-	-o ${DATA_DIR}/adjusted/${FN}-chr${CHR}.out \
+	-o ${DATA_DIR}/${PHEN}/adjusted/${FN}-chr${CHR}.out \
 	-frequentist 1 \
 	-method expected \
 	-hwe \
@@ -46,7 +46,7 @@ ${SNPTEST} \
 	-lower_sample_limit 50 \
 	-assume_chromosome ${CHR} \
 	-cov_names ${COV} \
-	-log ${DATA_DIR}/log/snptest-adjusted-${FN}-chr${CHR}.log \
+	-log ${DATA_DIR}/log/snptest-${PHEN}-adjusted-${FN}-chr${CHR}.log \
 	>/dev/null &
 
 ${SCRIPT_DIR}/wait-snptest.sh
@@ -55,14 +55,14 @@ echo "Unadjusted Analysis"
 
 ${SNPTEST} \
         -data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
-	-o ${DATA_DIR}/unadjusted/${FN}-chr${CHR}.out \
+	-o ${DATA_DIR}/${PHEN}/unadjusted/${FN}-chr${CHR}.out \
         -frequentist 1 \
         -method expected \
         -hwe \
         -pheno ${PHEN} \
         -lower_sample_limit 50 \
         -assume_chromosome ${CHR} \
-        -log ${DATA_DIR}/log/snptest-unadjusted-${FN}-chr${CHR}.log \
+        -log ${DATA_DIR}/log/snptest-${PHEN}-unadjusted-${FN}-chr${CHR}.log \
         >/dev/null &
 
 ${SCRIPT_DIR}/wait-snptest.sh
@@ -84,7 +84,7 @@ echo "Using SAMPLE file: ${DATA_DIR}/sample/${FN}.sample"
 
 ${SNPTEST} \
         -data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
-        -o ${DATA_DIR}/adjusted/${FN}-chr${CHR}.out \
+        -o ${DATA_DIR}/${PHEN}/adjusted/${FN}-chr${CHR}.out \
         -frequentist 1 \
         -method newml \
 	-sex_column SEX \
@@ -93,7 +93,7 @@ ${SNPTEST} \
         -pheno ${PHEN} \
         -lower_sample_limit 50 \
         -cov_names ${COV} \
-        -log ${DATA_DIR}/log/snptest-adjusted-${FN}-chr${CHR}.log \
+        -log ${DATA_DIR}/log/snptest-${PHEN}-adjusted-${FN}-chr${CHR}.log \
         >/dev/null &
 
 ${SCRIPT_DIR}/wait-snptest.sh
@@ -102,7 +102,7 @@ echo "Unadjusted Analysis"
 
 ${SNPTEST} \
         -data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
-        -o ${DATA_DIR}/unadjusted/${FN}-chr${CHR}.out \
+        -o ${DATA_DIR}/${PHEN}/unadjusted/${FN}-chr${CHR}.out \
         -frequentist 1 \
         -method newml \
         -sex_column SEX \
@@ -110,7 +110,7 @@ ${SNPTEST} \
         -hwe \
         -pheno ${PHEN} \
         -lower_sample_limit 50 \
-        -log ${DATA_DIR}/log/snptest-unadjusted-${FN}-chr${CHR}.log \
+        -log ${DATA_DIR}/log/snptest-${PHEN}-unadjusted-${FN}-chr${CHR}.log \
         >/dev/null &
 
 ${SCRIPT_DIR}/wait-snptest.sh

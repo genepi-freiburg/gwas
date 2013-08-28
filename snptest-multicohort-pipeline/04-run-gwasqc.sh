@@ -1,11 +1,13 @@
 ADJS="unadjusted adjusted"
 OLD_DIR=`pwd`
 
+for PHEN in ${PHENOTYPE_NAMES}
+do
 for ADJ in ${ADJS}
 do
-	echo "Processing ${ADJ} data"
-	mkdir -p ${DATA_DIR}/${ADJ}/qc
-	cd ${DATA_DIR}/${ADJ}/qc
+	echo "Processing ${PHEN} ${ADJ} data"
+	mkdir -p ${DATA_DIR}/${PHEN}/${ADJ}/qc
+	cd ${DATA_DIR}/${PHEN}/${ADJ}/qc
 	rm -vf *.gwas *.html *.png *.csv *.txt
 	echo "Linking GWAS result data"
 	ln -s ../*.gwas . -v
