@@ -19,4 +19,5 @@ mkdir -p ${LOG_DIR}
 . ${SCRIPT_DIR}/02-gwama.sh
 . ${SCRIPT_DIR}/03-filter.sh
 . ${SCRIPT_DIR}/04-add-pos.sh
+. ${SCRIPT_DIR}/05-annovar.sh
 
