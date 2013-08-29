@@ -16,5 +16,7 @@ mkdir -p ${DATA_DIR}
 mkdir -p ${LOG_DIR}
 
 . ${SCRIPT_DIR}/01-convert-snptest.sh
+. ${SCRIPT_DIR}/02-gwama.sh
+. ${SCRIPT_DIR}/03-filter.sh
+. ${SCRIPT_DIR}/04-add-pos.sh
 
-#. ${SCRIPT_DIR}/02-gwama.sh

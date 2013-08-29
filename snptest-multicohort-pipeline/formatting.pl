@@ -68,7 +68,7 @@ while (<INPUT>) {
 	    my $SE = $data[$pcol+3];
 	    my $n_total = round($all_AA + $all_AB + $all_BB);
 	    my $AF_coded_all = ($all_AB+2*$all_BB)/(2*($all_AA+$all_AB+$all_BB));
-	    my $HWE_pval = $data[19];
+	    my $HWE_pval = $data[20];
 	    
 	    my $callrate;
 	    if($data[0] eq "---") {

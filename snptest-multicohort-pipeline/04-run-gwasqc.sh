@@ -25,6 +25,7 @@ do
 	echo "Removing GWAS data links"
 	rm *.gwas -v
 done
+done
 
 cd ${OLD_DIR}
 
