@@ -37,15 +37,14 @@ while(<>) {
 	my @fields = split(/\t/);
 	if ($i > 0) {
 		my $rsid = $fields[0];
-		my $cmd = "grep '$rsid ' $legend_files";
-		my $mapline = `$cmd`;
+		my $res = $snps{$rsid};
 		my $chr = "?", my $pos = "?", my $ref = "?", my $obs = "?";
-		if ($mapline =~ /_chr(\d+)_/) {
-			$chr = $1;
-			my @mapl = split(/ /, $mapline);
+		if ($res) {
+			my @mapl = split(/ /, $res);
+			$chr = $mapl[0];
 			$pos = $mapl[1];
-			$ref = $mapl[3];
-			$obs = $mapl[2];
+			$ref = $mapl[2];
+			$obs = $mapl[3];
 		} 
 		my $pos2;
 		if ("$pos" ne "?") {
@@ -60,3 +59,4 @@ while(<>) {
 	}
 	$i++;
 }
+print STDERR "Finished; processed $i lines\n";

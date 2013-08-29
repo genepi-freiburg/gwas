@@ -15,7 +15,7 @@ do
         OUT_DIR="${DATA_DIR}/filtered-with-pos/${PHENO}"
         OUT_FN="${OUT_DIR}/gwama-${GROUP}-${ADJ}.out"
         mkdir -p ${OUT_DIR}
-        cat ${INFN} | perl ${SCRIPT_DIR}/add-pos.pl >> ${OUT_FN} &
+        cat ${INFN} | perl ${SCRIPT_DIR}/add-pos-2.pl >> ${OUT_FN} &
 
         ${SCRIPT_DIR}/wait-perl.sh
 
