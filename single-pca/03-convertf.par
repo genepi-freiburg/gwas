@@ -1,0 +1,8 @@
+genotypename:    06-cleanind-pca.ped
+snpname:         06-cleanind-pca.map
+indivname:       06-cleanind-pca.ped
+outputformat:    EIGENSTRAT
+genotypeoutname: 07-cleanind-pca.eigenstratgeno
+snpoutname:      07-cleanind-pca.snp
+indivoutname:    07-cleanind-pca.ind
+familynames:     NO

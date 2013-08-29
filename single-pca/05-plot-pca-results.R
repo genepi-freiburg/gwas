@@ -1,0 +1,13 @@
+prefix=Sys.getenv("PREFIX")
+outputdir=Sys.getenv("OUTPUT_DIR")
+data=read.table(paste(outputdir, "/05-", prefix, ".evec", sep=""),h=F,skip=1)
+cas=which(data$V12=="Case")
+cont=which(data$V12=="Control")
+pdf(paste(outputdir, "/06-", prefix, "-pca-plot.pdf", sep=""))
+plot(0,0,pch="",xlim=c(-0.1,0.1),ylim=c(-0.1,0.1),xlab="principal component 1", ylab="principal component 2")
+par(cex=0.5)
+points(data$V2[cas],data$V3[cas],pch="+",col="RED")
+points(data$V2[cont],data$V3[cont],pch="+",col="BLUE")
+dev.off()
+
+summary(data[cont,])

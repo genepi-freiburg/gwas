@@ -1,0 +1,14 @@
+genotypename: 07-cleanind-pca.eigenstratgeno
+snpname:      07-cleanind-pca.snp
+indivname:    07-cleanind-pca.ind
+evecoutname:  08-cleanind-pca.evec
+evaloutname:  08-cleanind-pca.eval
+altnormstyle: NO
+numoutevec:     10
+numoutlieriter: 0
+numoutlierevec: 2
+outliersigmathresh: 8.0
+qtmode: 0
+nsnpldregress: 2
+outlieroutname: 08-cleanind-pca.outlier
+
