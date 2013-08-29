@@ -15,5 +15,6 @@ LOG_DIR=${DATA_DIR}/log
 mkdir -p ${DATA_DIR}
 mkdir -p ${LOG_DIR}
 
-# prepare sample file
 . ${SCRIPT_DIR}/01-convert-snptest.sh
+
+#. ${SCRIPT_DIR}/02-gwama.sh

@@ -16,10 +16,10 @@ mkdir -p ${DATA_DIR}
 mkdir -p ${LOG_DIR}
 
 # prepare sample file
-. ${SCRIPT_DIR}/01-prepare-sample.sh
+#. ${SCRIPT_DIR}/01-prepare-sample.sh
 
 # SNPtest
-. ${SCRIPT_DIR}/02-snptest.sh
+#. ${SCRIPT_DIR}/02-snptest.sh
 
 # Formatting
 . ${SCRIPT_DIR}/03-formatting.sh
