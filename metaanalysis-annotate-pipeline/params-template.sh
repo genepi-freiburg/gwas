@@ -1,7 +1,7 @@
 # this is a template file that may be copied and adjusted to your needs
 
 ##### EXECUTABLES
-ANNOVAR=
+ANNOVAR=/opt/annovar
 GWAMA=~/bin/gwama/GWAMA
 GWAMA_CONVERT=~/bin/gwama/SNPTEST2.5_2_GWAMA.pl
 

@@ -1,38 +1,38 @@
-#!/bin/bash
-ANNOVAR=/opt/annovar
+ADJS="adjusted unadjusted"
 
-cd filtered-with-pos
-FNS=`ls -1`
-I=0
-cd ..
-
-for FN in ${FNS}
+for PHENO in ${PHENOTYPE_NAMES}
 do
 
-cat filtered-with-pos/${FN} | tail -n+2 > annovar/${FN}
-INFILE=annovar/${FN}
+for GROUP in ${METAANALYSIS_GROUPS}
+do
 
-I=$[I+1]
-echo Result file ${I}
+for ADJ in ${ADJS}
+do
 
-PROTOCOLS=refGene,phastConsElements46way,genomicSuperDups,gwasCatalog,snp137,ljb2_all
-OPERATION=g,r,r,r,f,f
-#	-csvout \
+        echo "Annotate: ${PHENO} ${GROUP} ${ADJ}"
 
-${ANNOVAR}/table_annovar.pl ${INFILE} ${ANNOVAR}/humandb/ \
-	-buildver hg19 \
-	-protocol ${PROTOCOLS} \
-	-operation ${OPERATION} \
-	2>&1 | tee annovar/${FN}.annovar.in.stdout.txt &
+        OUT_DIR=${DATA_DIR}/annovar/${PHENO}
+        mkdir -p ${OUT_DIR}
+        ANNFILE=${OUT_DIR}/annovar-${GROUP}-${ADJ}.in
 
-if [ $I -gt 10 ] 
-then
-	echo "Wait"
-	wait
-	I=0
-fi
+        POSFILE="${DATA_DIR}/filtered-with-pos/${PHENO}/gwama-${GROUP}-${ADJ}.out"
+	cat ${POSFILE} | tail -n+2 > ${ANNFILE}
+
+	PROTOCOLS=refGene
+	OPERATION=g
+
+	${ANNOVAR}/table_annovar.pl ${ANNFILE} ${ANNOVAR}/humandb/ \
+	        -buildver hg19 \
+	        -protocol ${PROTOCOLS} \
+	        -operation ${OPERATION} &
+
+done
+done
+
+echo "Waiting for ${PHENO} to finish"
+wait
 
 done
 
+echo Waiting for last jobs
 wait
-echo Wait for finish

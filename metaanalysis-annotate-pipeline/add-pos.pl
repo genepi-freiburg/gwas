@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 # TODO extract to params file
-$legend_files = "/data/gwas/pediGFR_gwas/Metaanalysis/Imputed/map/*.legend";
+my $legend_files = "/data/gwas/pediGFR_gwas/Metaanalysis/Imputed/map/*.legend";
 
 use strict;
 
