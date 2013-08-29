@@ -17,7 +17,7 @@ DATA_DIR="${EXPERIMENT}/out"
 # Phenotype Variable Names
 PHENOTYPE_NAMES="LNEGFR_EXP_BASELINE LNEGFR_EXP_SLOPE LNEGFR_CYCR_BASELINE LNEGFR_CYCR_SLOPE PROTEINURIA GLOMERULAR"
 
-# Phenotype Variable Types (C = continuous, D = discrete)
+# Phenotype Variable Types (P = continuous, B = binary)
 PHENOTYPE_TYPES="P P P P B B"
 
 # Phenotype table (must contain FID, IID, AGE, E1..E10)

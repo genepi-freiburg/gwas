@@ -1,10 +1,8 @@
 PROCESS_NAME="perl"
-PROCESS_LIMIT="16"
+PROCESS_LIMIT="10"
 PROCESS_COUNT="-1"
 SLEEP_TIME="5"
 DEBUG="0"
-
-sleep 2
 
 while [ "${PROCESS_COUNT}" -eq "-1" -o "${PROCESS_COUNT}" -ge "${PROCESS_LIMIT}" ]
 do
