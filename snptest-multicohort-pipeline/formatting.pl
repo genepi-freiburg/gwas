@@ -74,7 +74,7 @@ while (<INPUT>) {
 	    if($data[0] eq "---") {
 	      $callrate = 1;
             } else {
-              $callrate = round(1-($all_NULL/($all_AA+$all_AB+$all_BB+$all_NULL))*10000)/10000;
+              $callrate = round((1-($all_NULL/($all_AA+$all_AB+$all_BB+$all_NULL)))*10000)/10000;
 	    }
 
 	    my $imputed = 0;
