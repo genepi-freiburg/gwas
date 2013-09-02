@@ -18,6 +18,13 @@ mkdir -p ${LOG_DIR}
 # prepare sample file
 . ${SCRIPT_DIR}/01-prepare-sample.sh
 
+# check return code
+if [ $? != 0 ]
+then
+	echo "Sample file formatting failed"
+	exit
+fi
+
 # SNPtest
 . ${SCRIPT_DIR}/02-snptest.sh
 

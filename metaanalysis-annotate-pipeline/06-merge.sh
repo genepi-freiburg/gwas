@@ -1,12 +1,25 @@
 #!/bin/bash
 
-cd filtered-with-pos
-FNS=`ls -1 *.out`
-cd ..
+ADJS="adjusted unadjusted"
 
-for FN in ${FNS}
+mkdir -p ${DATA_DIR}/final
+
+for PHENO in ${PHENOTYPE_NAMES}
 do
-echo $FN
-Rscript 06-merge.R ${FN}
 
+for GROUP in ${METAANALYSIS_GROUPS}
+do
+
+for ADJ in ${ADJS}
+do
+
+        echo "Merge: ${PHENO} ${GROUP} ${ADJ}"
+
+        ANNOVARFILE="${DATA_DIR}/annovar/${PHENO}/annovar-${GROUP}-${ADJ}.in.hg19_multianno.txt"
+        POSFILE="${DATA_DIR}/filtered-with-pos/${PHENO}/gwama-${GROUP}-${ADJ}.out"
+        OUTFILE="${DATA_DIR}/final/${PHENO}-${GROUP}-${ADJ}.csv"
+	Rscript ${SCRIPT_DIR}/06-merge.R "${POSFILE}" "${ANNOVARFILE}" "${OUTFILE}"
+
+done
+done
 done

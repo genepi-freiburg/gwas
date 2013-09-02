@@ -46,6 +46,8 @@ prepare_sample <- function(fn)
   }
   head(result)
 
+  # TODO check phenotype (B = 0/1 only)
+
   outfn = paste(out_path, "/sample/", fn, ".sample", sep="")
   
   cat(paste("ID_1 ID_2 MISSING SEX AGE", phenos, 
