@@ -4,6 +4,7 @@ phenos = Sys.getenv("PHENOTYPE_NAMES")
 phen_name = Sys.getenv("PHENOTYPE_FILE")
 cohorts = Sys.getenv("COHORTS")
 pheno_types = Sys.getenv("PHENOTYPE_TYPES")
+eigen_dim = Sys.getenv("PC_VECTOR_SIZE")
 
 if (length(strsplit(phenos," ")) != length(strsplit(pheno_types," "))) {
   print("phenotype_names and phenotype_types must be of same length!")
@@ -40,7 +41,7 @@ prepare_sample <- function(fn)
   for (pheno in unlist(strsplit(phenos, " "))) {
     result[,pheno] = samp[,pheno]
   }
-  for (i in seq(1,10)) {
+  for (i in seq(1,eigen_dim)) {
     pc = paste("E",i,sep="")
     result[,pc]=samp[,pc]
   }
@@ -49,10 +50,22 @@ prepare_sample <- function(fn)
   # TODO check phenotype (B = 0/1 only)
 
   outfn = paste(out_path, "/sample/", fn, ".sample", sep="")
+
+  es = ""
+  cs = ""
+  for (i in 1:eigen_dim) {
+    if (nchar(es) == 0) {
+      es = paste("E", i, sep="")
+      cs = "C"
+    } else {
+      es = paste(es, " E", i, sep="")
+      cs = paste(cs, "C")
+    }
+  }
   
-  cat(paste("ID_1 ID_2 MISSING SEX AGE", phenos, 
-            "E1 E2 E3 E4 E5 E6 E7 E8 E9 E10\n0 0 0 D C",
-            pheno_types, "C C C C C C C C C C\n"), file=outfn)
+  cat(paste("ID_1 ID_2 MISSING SEX AGE", phenos, es,
+            "\n0 0 0 D C",
+            pheno_types, cs, "\n"), file=outfn)
   write.table(result, outfn, append=T, row.names=F, col.names=F, quote=F)
 }
 

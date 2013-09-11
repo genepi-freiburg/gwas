@@ -26,6 +26,9 @@ PHENOTYPE_FILE="${EXPERIMENT}/phenotype.txt"
 # Covariates file (fixed format, COHORT/PHENOTYPE/COVARIATE)
 COVARIATE_FILE="${EXPERIMENT}/significant-pcs.txt"
 
+# PC vector dimension
+PC_VECTOR_SIZE="10"
+
 ##### COHORTS
 
 # Cohort Names

@@ -6,20 +6,25 @@ ADJS="adjusted unadjusted"
 for PHENO in ${PHENOTYPE_NAMES}
 do
 
+for FN in ${ALL_COHORTS}
+do
+
 for ADJ in ${ADJS}
 do
 
-	echo "Filter ${PHENO} ${ADJ}"
-	MY_SNPTEST_FILE=`echo ${SNPTEST_OUTPUT_FILE} | sed s/%ADJ%/${ADJ}/g | sed s/%PHEN%/${PHEN}/g`
+	echo "Filter ${PHENO} ${FN} ${ADJ}"
+	INFN=`echo ${SNPTEST_OUTPUT_FILE} | sed s/%ADJ%/${ADJ}/g | sed s/%PHEN%/${PHENO}/g | sed s/%COHORT%/${FN}/g`
 	OUT_DIR="${DATA_DIR}"
-	OUT_FN="${OUT_DIR}/filtered-${PHENO}-${ADJ}.gwas"
+	OUT_FN="${OUT_DIR}/filtered-${FN}-${PHENO}-${ADJ}.gwas"
 	mkdir -p ${OUT_DIR}
 	head -n 1 ${INFN} > ${OUT_FN}
 	export MINP
+	echo "Infile: ${INFN}, Outfile: ${OUT_FN}"
 	cat ${INFN} | perl ${SCRIPT_DIR}/filter.pl >> ${OUT_FN} &
 
 	${SCRIPT_DIR}/wait-perl.sh
 
+done
 done
 done
 

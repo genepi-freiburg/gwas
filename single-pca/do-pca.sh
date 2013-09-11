@@ -1,11 +1,17 @@
 # Input:   SOURCE_FILE - relative path to BED/BIM/FAM  e.g. ../../CKID_Cleaned/whites_ckid/whites_ckid
 #          OUTPUT_DIR  - file to place results, intermediates and logs
 #          PREFIX      - file name prefix              e.g. whites_ckid
+#	   PC_COUNT    - number of PC's to calculate, default 10
 # Output:  ${PREFIX}.evec and ${PREFIX}.pdf files
 
 SOURCE_FILE=$1
 OUTPUT_DIR=$2
 PREFIX=$3
+PC_COUNT=$4
+if [ "${PC_COUNT}" == "" ]
+then
+	PC_COUNT=10
+fi
 
 SCRIPT_DIR=${0%/*}
 
@@ -18,6 +24,7 @@ fi
 echo "Input: ${SOURCE_FILE}"
 echo "Output to: ${OUTPUT_DIR}"
 echo "Prefix: ${PREFIX}"
+echo "PC count: ${PC_COUNT}"
 mkdir -p ${OUTPUT_DIR}
 
 . ${SCRIPT_DIR}/01-exclude-high-LD-snps.sh 

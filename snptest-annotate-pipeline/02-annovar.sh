@@ -1,22 +1,23 @@
 ADJS="adjusted unadjusted"
+        
+OUT_DIR=${DATA_DIR}/annovar
+mkdir -p ${OUT_DIR}
 
 for PHENO in ${PHENOTYPE_NAMES}
 do
 
-for GROUP in ${METAANALYSIS_GROUPS}
+for COHORT in ${ALL_COHORTS}
 do
 
 for ADJ in ${ADJS}
 do
 
-        echo "Annotate: ${PHENO} ${GROUP} ${ADJ}"
+        echo "Annotate: ${PHENO} ${COHORT} ${ADJ}"
 
-        OUT_DIR=${DATA_DIR}/annovar/${PHENO}
-        mkdir -p ${OUT_DIR}
-        ANNFILE=${OUT_DIR}/annovar-${GROUP}-${ADJ}.in
+        ANNFILE=${OUT_DIR}/annovar-${COHORT}-${PHENO}-${ADJ}.in
 
-        POSFILE="${DATA_DIR}/filtered-with-pos/${PHENO}/gwama-${GROUP}-${ADJ}.out"
-	cat ${POSFILE} | tail -n+2 > ${ANNFILE}
+        POSFILE="${DATA_DIR}/filtered-${COHORT}-${PHENO}-${ADJ}.gwas"
+	Rscript ${SCRIPT_DIR}/02-prepare-annovar.R ${POSFILE} ${ANNFILE}
 
 	PROTOCOLS=refGene
 	OPERATION=g

@@ -2,14 +2,14 @@
 
 use strict;
 
-my $p_border = 1E-5;
+my $p_border = 1E-6;
 #print("border = $p_border\n");
 
 my $i = 0;
 while(<>) {
 	my @fields = split(/\t/);
 	if ($i > 0) {
-		if($fields[9] < $p_border) {
+		if($fields[8] < $p_border) {
 			print(join("\t",@fields));
 		}
 	}

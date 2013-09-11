@@ -17,4 +17,6 @@ mkdir -p ${LOG_DIR}
 
 # Formatting
 . ${SCRIPT_DIR}/01-filter.sh
+. ${SCRIPT_DIR}/02-annovar.sh
+. ${SCRIPT_DIR}/03-plot.sh
 
