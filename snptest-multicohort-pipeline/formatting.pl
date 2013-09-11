@@ -31,7 +31,7 @@ if (exists $opts{'c'}) {
 open(INPUT, $opts{'i'}) or die "Input file not found!\n";
 open(OUTPUT, ">" . $opts{'o'}) or die "Cannot open output file for writing!\n";
 
-my $i = 0, my $pcol = -1;
+my $i = 0, my $pcol = -1, my $hwepcol = -1;
 my @header;
 my $skipped = 0, my $included = 0;
 
@@ -47,8 +47,11 @@ while (<INPUT>) {
 	if ($i == 0) {
 	  @header = @data;
 	  my ( $Pcol ) = grep { $header[$_] =~ /_pvalue/ } 0..$#header;
+	  my ( $Hwepcol ) = grep { $header[$_] =~ /_hwe/ } 0..$#header;
 	  $pcol = $Pcol;
 	  die "No P value found in header!\n" if $pcol < 1;
+	  $hwepcol = $Hwepcol;
+	  die "No HWE P value found in header!\n" if $hwepcol < 1;
 	  print OUTPUT "SNP\tchr\tposition\tcoded_all\tnoncoded_all\tstrand_genome\tbeta\tSE\tpval\tAF_coded_all\tHWE_pval\tcallrate\tn_total\timputed\tused_for_imp\toevar_imp\n";
 	} else {
 	  my $pval = $data[$pcol];
@@ -68,7 +71,7 @@ while (<INPUT>) {
 	    my $SE = $data[$pcol+3];
 	    my $n_total = round($all_AA + $all_AB + $all_BB);
 	    my $AF_coded_all = ($all_AB+2*$all_BB)/(2*($all_AA+$all_AB+$all_BB));
-	    my $HWE_pval = $data[20];
+	    my $HWE_pval = $data[$hwepcol];
 	    
 	    my $callrate;
 	    if($data[0] eq "---") {
