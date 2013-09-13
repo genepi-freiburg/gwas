@@ -8,7 +8,7 @@ sleep 2
 
 while [ "${PROCESS_COUNT}" -eq "-1" -o "${PROCESS_COUNT}" -ge "${PROCESS_LIMIT}" ]
 do
-	PROCESS_COUNT=`ps x | grep ${PROCESS_NAME} | grep -v grep | wc -l`
+	PROCESS_COUNT=`ps x | grep ${PROCESS_NAME} | grep -v grep | grep -v bash | wc -l`
 	if [ "${DEBUG}" -eq "1" ]
 	then
 		echo "Current Process Count: ${PROCESS_COUNT}"

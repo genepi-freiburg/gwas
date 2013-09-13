@@ -1,0 +1,2 @@
+- include more columns from SNPtest output (do not use .gwas, but SNPtest .out file)
+  - at least case/control allele freqs
