@@ -49,6 +49,8 @@ prepare_sample <- function(fn)
 
   # TODO check phenotype (B = 0/1 only)
 
+  print(paste("eigen-dim", eigen_dim))
+
   outfn = paste(out_path, "/sample/", fn, ".sample", sep="")
 
   es = ""
@@ -62,6 +64,8 @@ prepare_sample <- function(fn)
       cs = paste(cs, "C")
     }
   }
+
+  print(paste("phenos", phenos, "es", es, "cs", cs))
   
   cat(paste("ID_1 ID_2 MISSING SEX AGE", phenos, es,
             "\n0 0 0 D C",
