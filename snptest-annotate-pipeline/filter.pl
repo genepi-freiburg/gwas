@@ -2,7 +2,7 @@
 
 use strict;
 
-my $p_border = 1E-6;
+my $p_border = 1E-4;
 #print("border = $p_border\n");
 
 my $i = 0;

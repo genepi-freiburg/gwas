@@ -1,0 +1,5 @@
+Prune result files to include only best p values and discard other values to reduce data amount
+(keep only one result line per 5kb)
+
+Usage: $0 -p pvalColName -c chrColName -l posColName -r rsidColName -w windowSizeBp
+
