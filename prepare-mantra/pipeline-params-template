@@ -10,3 +10,7 @@ DATA_DIR="${DIR_PREFIX}/Mantra/20131009-prepare/out"
 # Study count filter
 # (only include SNPs in meta analysis that are present at least in MIN_STUDIES studies)
 MIN_STUDIES=4
+
+# Number of lines per Mantra data file
+# Must be divisible by (num_studies + 1)
+LINE_COUNT=3528000

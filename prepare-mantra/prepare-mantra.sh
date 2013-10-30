@@ -26,3 +26,11 @@ perl ${SCRIPT_DIR}/create-gwas-db.pl ${DATA_DIR} ${FILES}
 perl ${SCRIPT_DIR}/build-mantra-dat.pl ${DATA_DIR}/mantra.in ${DATA_DIR}/mantra.dat \
 	${DATA_DIR}/all-snps-uniq.txt ${DATA_DIR}/gwas.sqlite ${MIN_STUDIES}
 
+# Analyze Distance
+cd ${DATA_DIR}
+${SCRIPT_DIR}/dmatcal
+
+# Split File
+. ${SCRIPT_DIR/split-mantra-dat.sh
+
+# Run Mantra in parallel

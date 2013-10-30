@@ -1,7 +1,15 @@
 ADJS="adjusted unadjusted"
+
+if [ "${SKIP_UNADJUSTED_ANALYSIS}" != "1" ]
+then
+	ADJS="adjusted"
+fi
+
 #CHRS="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X_nonPAR"
 CHRS="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22"
 # there is another CHRS statement further down!!
+
+export PROCESS_LIMIT
 
 FORMATTING_LOG="${DATA_DIR}/log/formatting.log"
 rm -f ${FORMATTING_LOG}

@@ -1,5 +1,7 @@
 CHRS="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22"
 
+export PROCESS_LIMIT
+
 for FN in ${COHORTS}
 do
 
@@ -51,6 +53,8 @@ ${SNPTEST} \
 
 ${SCRIPT_DIR}/wait-snptest.sh
 
+if [ "${SKIP_UNADJUSTED_ANALYSIS}" != "1" ]
+then
 echo "Unadjusted Analysis"
 
 ${SNPTEST} \
@@ -66,6 +70,9 @@ ${SNPTEST} \
         >/dev/null &
 
 ${SCRIPT_DIR}/wait-snptest.sh
+else
+echo "Skip unadjusted analysis"
+fi
 
 echo "Chromosome ${CHR} done"
 done
@@ -98,6 +105,9 @@ ${SNPTEST} \
 
 ${SCRIPT_DIR}/wait-snptest.sh
 
+if [ "${SKIP_UNADJUSTED_ANALYSIS}" != "1" ]
+then
+
 echo "Unadjusted Analysis"
 
 ${SNPTEST} \
@@ -114,6 +124,9 @@ ${SNPTEST} \
         >/dev/null &
 
 ${SCRIPT_DIR}/wait-snptest.sh
+else
+echo "Skip unadjusted analysis"
+fi
 
 echo "Phenotype ${PHENO} done"
 done

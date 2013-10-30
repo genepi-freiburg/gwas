@@ -1,6 +1,11 @@
 ADJS="unadjusted adjusted"
 OLD_DIR=`pwd`
 
+if [ "${SKIP_UNADJUSTED_ANALYSIS}" != "1" ]
+then
+        ADJS="adjusted"
+fi
+
 for PHEN in ${PHENOTYPE_NAMES}
 do
 for ADJ in ${ADJS}

@@ -6,5 +6,7 @@ export PHENOTYPE_FILE
 export COHORTS
 export PHENOTYPE_TYPES
 export PC_VECTOR_SIZE
+export ADDITIONAL_COVARIATE_NAMES
+export ADDITIONAL_COVARIATE_TYPES
 mkdir -p ${DATA_DIR}/sample
 Rscript ${SCRIPT_DIR}/01-prepare-sample.R | tee ${LOG_DIR}/prepare-sample.log

@@ -1,8 +1,12 @@
 PROCESS_NAME="perl"
-PROCESS_LIMIT="16"
 PROCESS_COUNT="-1"
 SLEEP_TIME="5"
 DEBUG="0"
+
+if [ "${PROCESS_LIMIT}" == "" ]
+then
+        PROCESS_LIMIT="8"
+fi
 
 sleep 2
 

@@ -29,6 +29,15 @@ COVARIATE_FILE="${EXPERIMENT}/significant-pcs.txt"
 # PC vector dimension
 PC_VECTOR_SIZE="10"
 
+# additional covariates (besides AGE, SEX, E1..10; must also be contained in covariate file)
+ADDITIONAL_COVARIATE_NAMES=""
+
+# covariate types (C = continuous, D = binary)
+ADDITIONAL_COVARIATE_TYPES=""
+
+# skip unadjusted analysis (0/1)
+SKIP_UNADJUSTED_ANALYSIS="0"
+
 ##### COHORTS
 
 # Cohort Names
@@ -45,5 +54,5 @@ GEN_PATH="${DIR_PREFIX}/Imputation/final/%COHORT%-chr%CHR%.gen"
 # Genotypes FAM files
 FAM_PATH="${DIR_PREFIX}/Imputation/input/%COHORT%.fam"
 
-
-
+### TECHNICAL
+PROCESS_LIMIT="16"

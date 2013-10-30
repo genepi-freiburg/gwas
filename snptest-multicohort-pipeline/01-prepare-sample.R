@@ -1,14 +1,31 @@
 fam_path = Sys.getenv("FAM_PATH")
 out_path = Sys.getenv("DATA_DIR")
 phenos = Sys.getenv("PHENOTYPE_NAMES")
+add_covars = Sys.getenv("ADDITIONAL_COVARIATE_NAMES")
+add_covar_types = Sys.getenv("ADDITIONAL_COVARIATE_TYPES")
 phen_name = Sys.getenv("PHENOTYPE_FILE")
 cohorts = Sys.getenv("COHORTS")
 pheno_types = Sys.getenv("PHENOTYPE_TYPES")
 eigen_dim = Sys.getenv("PC_VECTOR_SIZE")
 
+if (is.na(add_covars)) {
+  add_covars = ""
+}
+
+if (is.na(add_covar_types)) {
+  add_covar_types = ""
+}
+
 if (length(strsplit(phenos," ")) != length(strsplit(pheno_types," "))) {
   print("phenotype_names and phenotype_types must be of same length!")
   quit(status=98)
+}
+
+if (nchar(add_covars > 0) | nchar(add_covar_types) > 0) {
+  if (length(strsplit(add_covars, " ")) != length(strsplit(add_covar_types, " "))) {
+    print("add_covar_types and add_covars must be of same length!")
+    quit(status=99)
+  }
 }
 
 prepare_sample <- function(fn) 
@@ -41,6 +58,11 @@ prepare_sample <- function(fn)
   for (pheno in unlist(strsplit(phenos, " "))) {
     result[,pheno] = samp[,pheno]
   }
+  if (nchar(add_covars) > 0) {
+    for (covar in unlist(strsplit(add_covars, " "))) {
+      result[,covar] = samp[,covar]
+    }
+  }
   for (i in seq(1,eigen_dim)) {
     pc = paste("E",i,sep="")
     result[,pc]=samp[,pc]
@@ -65,11 +87,12 @@ prepare_sample <- function(fn)
     }
   }
 
-  print(paste("phenos", phenos, "es", es, "cs", cs))
+  print(paste("phenos", phenos, "add covars", add_covars, "es", es, 
+              "pheno_types", pheno_types, "covar_types", add_covar_types, "cs", cs))
   
-  cat(paste("ID_1 ID_2 MISSING SEX AGE", phenos, es,
+  cat(paste("ID_1 ID_2 MISSING SEX AGE", phenos, add_covars, es,
             "\n0 0 0 D C",
-            pheno_types, cs, "\n"), file=outfn)
+            pheno_types, add_covar_types, cs, "\n"), file=outfn)
   write.table(result, outfn, append=T, row.names=F, col.names=F, quote=F)
 }
 
