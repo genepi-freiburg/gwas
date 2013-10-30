@@ -1,0 +1,3 @@
+mantra.out
+mantra.bet.out
+32424234
