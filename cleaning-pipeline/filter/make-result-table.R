@@ -49,6 +49,7 @@ fail_any = merge(fail_any, fail_het6, all=T)
 fail_any = merge(fail_any, fail_ibd,  all=T)
 fail_any = merge(fail_any, fail_pca,  all=T)
 
+fail_any$fail_miss  = fail_any$IID %in% fail_miss$IID
 fail_any$fail_sex  = fail_any$IID %in% fail_sex$IID
 fail_any$fail_het2 = fail_any$IID %in% fail_het2$IID
 fail_any$fail_het3 = fail_any$IID %in% fail_het3$IID
