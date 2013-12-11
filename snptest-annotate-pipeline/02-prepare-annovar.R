@@ -21,7 +21,7 @@ out = data.frame(
 	HWE_PVAL=data$HWE_pval,
         CALLRATE=data$callrate,
 	N_TOTAL=data$n_total,
-	IMPUTET=data$imputed
+	IMPUTED=data$imputed
 )
 
 #write.table(out, outfile, row.names=F, col.names=T, quote=F)

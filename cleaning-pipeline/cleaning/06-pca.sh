@@ -96,7 +96,7 @@ ${CONVERTF} -p ${TEMP_DIR}/07-convertf.par 2>&1 >/dev/null
 log "conduct PCA"
 
 cat ${SCRIPT_DIR}/aux/smartpca.par.template | sed "s|TEMP_DIR|${TEMP_DIR}|g" > ${TEMP_DIR}/08-smartpca.par
-${SMARTPCA} -p ${TEMP_DIR}/08-smartpca.par 2>&1 >/dev/null
+${SMARTPCA} -p ${TEMP_DIR}/08-smartpca.par 2>&1 > ${TEMP_DIR}/08-smartpca.stdout.stderr
 cp ${TEMP_DIR}/08-merge-hapmap.evec ${RESULT_DIR}/${SOURCE_NAME}.evec
 cp ${TEMP_DIR}/08-merge-hapmap.eval ${RESULT_DIR}/${SOURCE_NAME}.eval
 cp ${TEMP_DIR}/08-merge-hapmap.outlier ${RESULT_DIR}/${SOURCE_NAME}.outlier

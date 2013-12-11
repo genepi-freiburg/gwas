@@ -55,10 +55,13 @@ prepare_sample <- function(fn)
   result = data.frame(FID=samp$FID, IID=samp$IID,
         MISSING=0, SEX=samp$SEX, AGE=samp$AGE)
 
+  print(paste("phenos =", phenos))
   for (pheno in unlist(strsplit(phenos, " "))) {
+    print(paste("add pheno =", pheno))
     result[,pheno] = samp[,pheno]
   }
   if (nchar(add_covars) > 0) {
+    print(paste("add_covars =", add_covars))
     for (covar in unlist(strsplit(add_covars, " "))) {
       result[,covar] = samp[,covar]
     }

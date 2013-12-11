@@ -55,11 +55,14 @@ ${GWAMA} ${PHEN_TYP_CODE} -gc -gco \
 # GROUP
 done
 
+echo "Waiting for GWAMA to finish ${PHEN} - ${ADJ}"
+wait
+
 # ADJ
 done
 
-echo "Waiting for GWAMA to finish ${PHEN}"
-wait
+#echo "Waiting for GWAMA to finish ${PHEN}"
+#wait
 
 # PHEN
 done

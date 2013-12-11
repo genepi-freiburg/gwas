@@ -2,6 +2,11 @@ CHRS="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22"
 
 export PROCESS_LIMIT
 
+if [ "${FREQUENTIST_MODEL}" == "" ]
+then
+	FREQUENTIST_MODEL=1
+fi
+
 for FN in ${COHORTS}
 do
 
@@ -41,7 +46,7 @@ echo "Using SAMPLE file: ${DATA_DIR}/sample/${FN}.sample"
 ${SNPTEST} \
 	-data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
 	-o ${DATA_DIR}/${PHEN}/adjusted/${FN}-chr${CHR}.out \
-	-frequentist 1 \
+	-frequentist ${FREQUENTIST_MODEL} \
 	-method expected \
 	-hwe \
 	-pheno ${PHEN} \
@@ -60,7 +65,7 @@ echo "Unadjusted Analysis"
 ${SNPTEST} \
         -data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
 	-o ${DATA_DIR}/${PHEN}/unadjusted/${FN}-chr${CHR}.out \
-        -frequentist 1 \
+        -frequentist ${FREQUENTIST_MODEL} \
         -method expected \
         -hwe \
         -pheno ${PHEN} \
@@ -92,7 +97,7 @@ echo "Using SAMPLE file: ${DATA_DIR}/sample/${FN}.sample"
 ${SNPTEST} \
         -data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
         -o ${DATA_DIR}/${PHEN}/adjusted/${FN}-chr${CHR}.out \
-        -frequentist 1 \
+        -frequentist ${FREQUENTIST_MODEL} \
         -method newml \
 	-sex_column SEX \
         -hwe \
@@ -113,7 +118,7 @@ echo "Unadjusted Analysis"
 ${SNPTEST} \
         -data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
         -o ${DATA_DIR}/${PHEN}/unadjusted/${FN}-chr${CHR}.out \
-        -frequentist 1 \
+        -frequentist ${FREQUENTIST_MODEL} \
         -method newml \
         -sex_column SEX \
         -assume_chromosome 0X \
