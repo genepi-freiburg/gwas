@@ -60,6 +60,7 @@ fi
 if [ "${HWE}" != "" ]
 then
 	log "apply HWE filter ${HWE}"
+        . ${SCRIPT_DIR}/filter/04-hwe-filter.sh
         log_stats
 else
 	log "no HWE filter"

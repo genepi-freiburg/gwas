@@ -17,7 +17,7 @@ getopt('pcwlrht', \%opts);
 $pvalColName = $opts{'p'} if exists $opts{'p'};
 $chrColName = $opts{'c'} if exists $opts{'c'};
 $posColName = $opts{'l'} if exists $opts{'l'};
-$rsidColName = $opts{'r'} if exists $opts{'l'};
+$rsidColName = $opts{'r'} if exists $opts{'r'};
 $windowSize = $opts{'w'} if exists $opts{'w'};
 $transferColName = $opts{'t'} if exists $opts{'t'};
 
@@ -68,7 +68,9 @@ while (<>) {
   next if /^#/;
   my @line = split(/\t/);
   my $lineChr = $line[$chrCol];
+  next if ($lineChr eq "CHR");
   my $linePos = $line[$posCol];
+  chomp($linePos);
   my $linePval = $line[$pvalCol];
   my $lineRsid = $line[$rsidCol];
   my $lineIdx = $lineChr . "_" . int($linePos / $windowSize);

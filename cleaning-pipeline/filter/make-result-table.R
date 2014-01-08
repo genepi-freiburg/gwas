@@ -14,9 +14,21 @@ e1l = as.numeric(args[3])
 e1u = as.numeric(args[4])
 e2l = as.numeric(args[5])
 e2u = as.numeric(args[6])
+dstl = as.numeric(args[7])
+dstu = as.numeric(args[8])
 
 fail_sex = read.table(paste(result_dir, "/fail-sexcheck.txt", sep=""), col.names="IID")
 fail_miss = read.table(paste(result_dir, "/fail-missingness.txt", sep=""), col.names="IID")
+
+avgdst = read.table(paste(result_dir, "/ind-dst.txt", sep=""), h=T)
+fail_dst = avgdst[which(avgdst$AVGDST < dstl | avgdst$AVGDST > dstu),]
+fail_dst = data.frame(IID=fail_dst$IID)
+summary(fail_dst)
+
+print(paste("failing AvgDST", nrow(fail_dst)))
+print(paste("passing AvgDST", nrow(avgdst) - nrow(fail_dst)))
+
+fail_pca_8sd = read.table(paste(result_dir, "/fail-pca-outlier_8sd.txt", sep=""), h=F, col.names="IID")
 
 het = read.table(paste(result_dir, "/", file_name, ".het", sep=""), h=T)
 het$meanHet = (het$N.NM. - het$O.HOM.) / het$N.NM.
@@ -48,6 +60,8 @@ fail_any = merge(fail_any, fail_het5, all=T)
 fail_any = merge(fail_any, fail_het6, all=T)
 fail_any = merge(fail_any, fail_ibd,  all=T)
 fail_any = merge(fail_any, fail_pca,  all=T)
+fail_any = merge(fail_any, fail_pca_8sd,  all=T)
+fail_any = merge(fail_any, fail_dst,  all=T)
 
 fail_any$fail_miss  = fail_any$IID %in% fail_miss$IID
 fail_any$fail_sex  = fail_any$IID %in% fail_sex$IID
@@ -58,6 +72,8 @@ fail_any$fail_het5 = fail_any$IID %in% fail_het5$IID
 fail_any$fail_het6 = fail_any$IID %in% fail_het6$IID
 fail_any$fail_ibd  = fail_any$IID %in% fail_ibd$IID
 fail_any$fail_pca  = fail_any$IID %in% fail_pca$IID
+fail_any$fail_pca_8sd  = fail_any$IID %in% fail_pca_8sd$IID
+fail_any$fail_dst  = fail_any$IID %in% fail_dst$IID
 
 fam = read.table(paste(result_dir, "/../", file_name, ".fam", sep=""))
 colnames(fam) = c("FID", "IID", "P1", "P2", "SEX", "X")

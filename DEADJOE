@@ -1,0 +1,15 @@
+
+*** Modified files in JOE when it aborted on Fri Dec 13 13:50:40 2013
+*** JOE was aborted because the terminal closed
+
+*** File '.git/COMMIT_EDITMSG'
+settings
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   cleaning-pipeline/filter-pipeline.sh
+#	modified:   prune-for-manhattan/prune-variants.pl
+#

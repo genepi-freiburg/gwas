@@ -31,8 +31,8 @@ sub lookup
 # main program
 while (<>) {
 	my @fields = split(/\t/);
-	my @pos = lookup($fields[$rsidx]);
 	chomp($fields[$#fields]);
+	my @pos = lookup($fields[$rsidx]);
 	push(@fields, @pos);
 	print(join("\t", @fields)."\n");
 }

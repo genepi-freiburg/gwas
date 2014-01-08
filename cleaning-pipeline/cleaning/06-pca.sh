@@ -101,6 +101,8 @@ cp ${TEMP_DIR}/08-merge-hapmap.evec ${RESULT_DIR}/${SOURCE_NAME}.evec
 cp ${TEMP_DIR}/08-merge-hapmap.eval ${RESULT_DIR}/${SOURCE_NAME}.eval
 cp ${TEMP_DIR}/08-merge-hapmap.outlier ${RESULT_DIR}/${SOURCE_NAME}.outlier
 
+cut -d " " -f 3 ${TEMP_DIR}/08-merge-hapmap.outlier > ${RESULT_DIR}/fail-pca-outlier_8sd.txt
+
 log "plot PCA result"
 
 Rscript ${SCRIPT_DIR}/cleaning/06-plot-pca-results.R ${TEMP_DIR}/08-merge-hapmap.evec ${RESULT_DIR}/pca-plot.pdf 2>&1 >/dev/null

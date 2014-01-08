@@ -3,6 +3,7 @@ inputpathname = args[1]
 outputpathname = args[2]
 famname = args[3]
 
+print("reading genome file")
 data = read.table(paste(inputpathname, ".genome", sep=""), h=T)
 
 pdf(paste(outputpathname, "/pairwise-IBD-histogram.pdf", sep=""))
@@ -17,6 +18,7 @@ dev.off()
 out = which(data$PI_HAT > 0.185)
 write.table(data[out,], file=paste(outputpathname, "/fail-IBD-check.txt", sep=""), col.names=T, row.names=F)
 
+print("calculate avgDST")
 dst = data
 ind <- read.table(famname, header=F, stringsAsFactors=F)
 ind$AvgDST <- NA
@@ -34,3 +36,10 @@ rug(ind$AvgDST)
 abline(v=0.678, col="blue")
 abline(v=0.66, col="blue")
 dev.off()
+
+dst = data.frame(
+	FID=ind$V1,
+	IID=ind$V2,
+	AVGDST=ind$AvgDST
+)
+write.table(dst, paste(outputpathname, "ind-dst.txt", sep="/"), col.names=T, row.names=F,quote=F)

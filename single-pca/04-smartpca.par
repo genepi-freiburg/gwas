@@ -5,8 +5,8 @@ evecoutname:  08-cleanind-pca.evec
 evaloutname:  08-cleanind-pca.eval
 altnormstyle: NO
 numoutevec:     10
-numoutlieriter: 0
-numoutlierevec: 2
+numoutlieriter: 5
+numoutlierevec: 10
 outliersigmathresh: 8.0
 qtmode: 0
 nsnpldregress: 2
