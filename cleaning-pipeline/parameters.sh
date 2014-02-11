@@ -59,3 +59,5 @@ log() {
 	echo ${MESSAGE}
 }
 
+
+
