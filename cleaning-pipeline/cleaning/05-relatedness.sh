@@ -1,30 +1,37 @@
 #!/bin/bash
 
-log "excluding SNPs in high-LD regions; prune SNPs"
+if [ -f ${RESULT_DIR}/${SOURCE_NAME}.genome ]
+then
+	log "Skip pairwise IBS (already done)"
+else
 
-${PLINK} --noweb \
-       --bfile ${SOURCE_NOF_FILE} \
-	--exclude ${SCRIPT_DIR}/aux/high-LD-regions.txt \
-	--range --indep-pairwise 50 5 0.2 \
-	--out ${TEMP_DIR}/01-high-ld \
-		2>&1 >/dev/null
+	log "excluding SNPs in high-LD regions; prune SNPs"
 
-mv ${TEMP_DIR}/01-high-ld.log ${LOG_DIR}/high-ld.log
+	${PLINK} --noweb \
+	        --bfile ${SOURCE_NOF_FILE} \
+		--exclude ${SCRIPT_DIR}/aux/high-LD-regions.txt \
+		--range --indep-pairwise 50 5 0.2 \
+		--out ${TEMP_DIR}/01-high-ld \
+			2>&1 >/dev/null
 
-log "calculate pairwise IBS"
+	mv ${TEMP_DIR}/01-high-ld.log ${LOG_DIR}/high-ld.log
 
-${PLINK} --noweb \
-       --bfile ${SOURCE_NOF_FILE} \
-	--extract ${TEMP_DIR}/01-high-ld.prune.in \
-	--genome \
-	--out ${TEMP_DIR}/02-pairwise-IBS \
-		2>&1 >/dev/null
+	log "calculate pairwise IBS"
 
-rm -f ${TEMP_DIR}/01-high-ld.*
-rm -f ${TEMP_DIR}/02-pairwise-IBS.hh
-mv ${TEMP_DIR}/02-pairwise-IBS.genome ${RESULT_DIR}/${SOURCE_NAME}.genome
-mv ${TEMP_DIR}/02-pairwise-IBS.log ${LOG_DIR}/pairwise-ibs.log
+	${PLINK} --noweb \
+	       --bfile ${SOURCE_NOF_FILE} \
+		--extract ${TEMP_DIR}/01-high-ld.prune.in \
+		--genome \
+		--out ${TEMP_DIR}/02-pairwise-IBS \
+			2>&1 >/dev/null
 
-log "plot pairwise IBS"
+	rm -f ${TEMP_DIR}/01-high-ld.*
+	rm -f ${TEMP_DIR}/02-pairwise-IBS.hh
+	mv ${TEMP_DIR}/02-pairwise-IBS.genome ${RESULT_DIR}/${SOURCE_NAME}.genome
+	mv ${TEMP_DIR}/02-pairwise-IBS.log ${LOG_DIR}/pairwise-ibs.log
 
-Rscript ${SCRIPT_DIR}/cleaning/05-plot-IBD.R ${RESULT_DIR}/${SOURCE_NAME} ${RESULT_DIR} ${SOURCE_DIR}/${SOURCE_NAME}.fam 2>&1 >/dev/null
+	log "plot pairwise IBS"
+
+	Rscript ${SCRIPT_DIR}/cleaning/05-plot-IBD.R ${RESULT_DIR}/${SOURCE_NAME} ${RESULT_DIR} ${SOURCE_DIR}/${SOURCE_NAME}.fam 2>&1 >/dev/null
+
+fi

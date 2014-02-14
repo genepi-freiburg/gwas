@@ -1,32 +1,40 @@
 #!/bin/bash
 
-log "Analyze raw data file"
-${PLINK} --noweb \
-        --bfile ${SOURCE_FILE} \
-        --out ${TEMP_DIR}/00-nofounders \
-		2>&1 >/dev/null
+if [ -f ${LOG_DIR}/rawdata.log ]
+then
+	log "Analyze raw data file - SKIPPED, already done"
+else
+	log "Analyze raw data file"
+	${PLINK} --noweb \
+	        --bfile ${SOURCE_FILE} \
+	        --out ${TEMP_DIR}/00-nofounders \
+			2>&1 >/dev/null
 
-mv ${TEMP_DIR}/00-nofounders.log ${LOG_DIR}/rawdata.log
-rm -f ${TEMP_DIR}/00-nofounders.hh
+	mv ${TEMP_DIR}/00-nofounders.log ${LOG_DIR}/rawdata.log
+	rm -f ${TEMP_DIR}/00-nofounders.hh
+fi
 
 if [ -f ${TEMP_DIR}/00-nofounders.nof ]
 then
 
-log "Recode to exclude non-founder SNPs"
-${PLINK} --noweb \
-        --bfile ${SOURCE_FILE} \
-        --make-bed \
-        --recode \
-        --exclude ${TEMP_DIR}/00-nofounders.nof \
-        --out ${SOURCE_NOF_FILE} \
-		2>&1 >/dev/null
+	log "Recode to exclude non-founder SNPs"
+	${PLINK} --noweb \
+	        --bfile ${SOURCE_FILE} \
+	        --make-bed \
+	        --recode \
+	        --exclude ${TEMP_DIR}/00-nofounders.nof \
+	        --out ${SOURCE_NOF_FILE} \
+			2>&1 >/dev/null
 
-mv ${SOURCE_NOF_FILE}.log ${LOG_DIR}/nofounders.log
+	mv ${SOURCE_NOF_FILE}.log ${LOG_DIR}/nofounders.log
 
 else
-	ln -s ${SOURCE_FILE}.bed ${SOURCE_NOF_FILE}.bed
-	ln -s ${SOURCE_FILE}.bim ${SOURCE_NOF_FILE}.bim
-	ln -s ${SOURCE_FILE}.fam ${SOURCE_NOF_FILE}.fam
+	if [ ! -f ${SOURCE_NOF_FILE}.bed ]
+	then
+		ln -s ${SOURCE_FILE}.bed ${SOURCE_NOF_FILE}.bed
+		ln -s ${SOURCE_FILE}.bim ${SOURCE_NOF_FILE}.bim
+		ln -s ${SOURCE_FILE}.fam ${SOURCE_NOF_FILE}.fam
+	fi
 fi
 
 rm -f ${SOURCE_NOF_FILE}.hh

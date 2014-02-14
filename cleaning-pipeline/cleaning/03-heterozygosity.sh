@@ -1,14 +1,19 @@
 #!/bin/bash
 
-${PLINK} --noweb \
-        --bfile ${SOURCE_NOF_FILE} \
-        --het \
-        --out ${TEMP_DIR}/03-heterozygosity \
-		2>&1 >/dev/null
+if [ -f ${RESULT_DIR}/${SOURCE_NAME}.het ]
+then
+	log "Skip Heterozygosity (already done)"
+else
+	${PLINK} --noweb \
+	        --bfile ${SOURCE_NOF_FILE} \
+	        --het \
+	        --out ${TEMP_DIR}/03-heterozygosity \
+			2>&1 >/dev/null
 
-mv ${TEMP_DIR}/03-heterozygosity.log ${LOG_DIR}/heterozygosity.log
-mv ${TEMP_DIR}/03-heterozygosity.het ${RESULT_DIR}/${SOURCE_NAME}.het
-rm -f ${TEMP_DIR}/03-heterozygosity.hh
+	mv ${TEMP_DIR}/03-heterozygosity.log ${LOG_DIR}/heterozygosity.log
+	mv ${TEMP_DIR}/03-heterozygosity.het ${RESULT_DIR}/${SOURCE_NAME}.het
+	rm -f ${TEMP_DIR}/03-heterozygosity.hh
+fi
 
 Rscript ${SCRIPT_DIR}/cleaning/03-analyze-heterozygosity.R ${RESULT_DIR}/${SOURCE_NAME} ${TEMP_DIR}/03-heterozygosity-analysis.txt 2>&1 >/dev/null
 
