@@ -1,6 +1,6 @@
-if [ -f ${OUTPUT_DIR}/02-${PREFIX}-exclude-high-LD-snps ]
+if [ -f ${OUTPUT_DIR}/02-${PREFIX}-exclude-high-LD-snps.prune.in ]
 then
-	echo "Skip Prune-LD step - output already present
+	echo "Skip Prune-LD step - output already present"
 else
 
 	/usr/lib/plink/plink \
