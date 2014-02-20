@@ -75,7 +75,7 @@ fail_any$fail_pca  = fail_any$IID %in% fail_pca$IID
 fail_any$fail_pca_8sd  = fail_any$IID %in% fail_pca_8sd$IID
 fail_any$fail_dst  = fail_any$IID %in% fail_dst$IID
 
-fam = read.table(paste(result_dir, "/../", file_name, ".fam", sep=""))
+fam = read.table(paste(result_dir, "/../", file_name, ".fam", sep=""), colClasses=c("character", "character", "character", "character", "factor", "character"))
 colnames(fam) = c("FID", "IID", "P1", "P2", "SEX", "X")
 fam$P1 = NULL
 fam$P2 = NULL
