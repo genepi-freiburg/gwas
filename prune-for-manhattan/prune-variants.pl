@@ -32,7 +32,9 @@ my $currentRegionPval = -1;
 my $currentRegionRsid = "";
 my $currentRegionTransfer = "";
 
-my @header = split(/\t/, <>);
+my $firstLine = <>;
+chomp($firstLine);
+my @header = split(/\t/, $firstLine);
 
 my $pvalCol = first { $header[$_] eq $pvalColName } 0..$#header;
 die "did not find PVAL column $pvalColName\n" unless defined $pvalCol;
