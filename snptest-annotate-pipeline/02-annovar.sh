@@ -1,4 +1,9 @@
 ADJS="adjusted unadjusted"
+
+if [ "${SKIP_UNADJUSTED}" == 1 ]
+then
+        ADJS="adjusted"
+fi
         
 OUT_DIR=${DATA_DIR}/annovar
 mkdir -p ${OUT_DIR}
@@ -27,6 +32,8 @@ do
 	        -protocol ${PROTOCOLS} \
 	        -operation ${OPERATION} &
 
+	# hier waere mehr Formatierung (Spaltenkoepfe! Tab vs. Whitespace) gut
+	Rscript ${SCRIPT_DIR}/02-postprocess-annovar.R ${ANNFILE}.refGene.variant_function ${DATA_DIR}/annovar-${COHORT}-${PHENO}-${ADJ}.out.txt
 done
 done
 

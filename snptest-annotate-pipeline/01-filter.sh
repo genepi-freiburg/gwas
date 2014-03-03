@@ -2,6 +2,10 @@
 
 
 ADJS="adjusted unadjusted"
+if [ "${SKIP_UNADJUSTED}" == 1 ]
+then
+	ADJS="adjusted"
+fi
 
 for PHENO in ${PHENOTYPE_NAMES}
 do
