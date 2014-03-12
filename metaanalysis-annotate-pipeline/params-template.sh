@@ -2,8 +2,8 @@
 
 ##### EXECUTABLES
 ANNOVAR=/opt/annovar
-GWAMA=~/bin/gwama/GWAMA
-GWAMA_CONVERT=~/bin/gwama/SNPTEST2.5_2_GWAMA.pl
+GWAMA=/data/gwas/bin/gwama/GWAMA
+GWAMA_CONVERT=/data/gwas/bin/gwama/SNPTEST2.5_2_GWAMA.pl
 
 ##### DIRECTORIES
 
