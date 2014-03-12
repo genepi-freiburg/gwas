@@ -30,7 +30,7 @@ do
 	${ANNOVAR}/table_annovar.pl ${ANNFILE} ${ANNOVAR}/humandb/ \
 	        -buildver hg19 \
 	        -protocol ${PROTOCOLS} \
-	        -operation ${OPERATION} &
+	        -operation ${OPERATION} 
 
 	# hier waere mehr Formatierung (Spaltenkoepfe! Tab vs. Whitespace) gut
 	Rscript ${SCRIPT_DIR}/02-postprocess-annovar.R ${ANNFILE}.refGene.variant_function ${DATA_DIR}/annovar-${COHORT}-${PHENO}-${ADJ}.out.txt

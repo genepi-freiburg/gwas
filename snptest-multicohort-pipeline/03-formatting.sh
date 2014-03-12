@@ -1,6 +1,6 @@
 ADJS="adjusted unadjusted"
 
-if [ "${SKIP_UNADJUSTED_ANALYSIS}" != "1" ]
+if [ "${SKIP_UNADJUSTED_ANALYSIS}" == "1" ]
 then
 	ADJS="adjusted"
 fi

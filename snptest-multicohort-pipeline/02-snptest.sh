@@ -43,6 +43,25 @@ echo "Using SAMPLE file: ${DATA_DIR}/sample/${FN}.sample"
 	
 #-total_prob_limit 0 \
 
+if [ "${RAW_PHENOTYPES}" == "1" ]
+then
+
+${SNPTEST} \
+        -data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
+        -o ${DATA_DIR}/${PHEN}/adjusted/${FN}-chr${CHR}.out \
+        -frequentist ${FREQUENTIST_MODEL} \
+        -method expected \
+        -hwe \
+        -pheno ${PHEN} \
+        -lower_sample_limit 50 \
+        -assume_chromosome ${CHR} \
+        -cov_names ${COV} \
+        -log ${DATA_DIR}/log/snptest-${PHEN}-adjusted-${FN}-chr${CHR}.log \
+	-use_raw_phenotypes \
+        >/dev/null &
+
+else
+
 ${SNPTEST} \
 	-data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
 	-o ${DATA_DIR}/${PHEN}/adjusted/${FN}-chr${CHR}.out \
@@ -56,11 +75,30 @@ ${SNPTEST} \
 	-log ${DATA_DIR}/log/snptest-${PHEN}-adjusted-${FN}-chr${CHR}.log \
 	>/dev/null &
 
+fi
+
 ${SCRIPT_DIR}/wait-snptest.sh
 
 if [ "${SKIP_UNADJUSTED_ANALYSIS}" != "1" ]
 then
 echo "Unadjusted Analysis"
+
+if [ "${RAW_PHENOTYPES}" == "1" ]
+then
+
+${SNPTEST} \
+        -data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
+        -o ${DATA_DIR}/${PHEN}/unadjusted/${FN}-chr${CHR}.out \
+        -frequentist ${FREQUENTIST_MODEL} \
+        -method expected \
+        -hwe \
+        -pheno ${PHEN} \
+        -lower_sample_limit 50 \
+        -assume_chromosome ${CHR} \
+        -log ${DATA_DIR}/log/snptest-${PHEN}-unadjusted-${FN}-chr${CHR}.log \
+        >/dev/null &
+
+else
 
 ${SNPTEST} \
         -data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
@@ -72,7 +110,10 @@ ${SNPTEST} \
         -lower_sample_limit 50 \
         -assume_chromosome ${CHR} \
         -log ${DATA_DIR}/log/snptest-${PHEN}-unadjusted-${FN}-chr${CHR}.log \
+        -use_raw_phenotypes \
         >/dev/null &
+
+fi
 
 ${SCRIPT_DIR}/wait-snptest.sh
 else
@@ -81,6 +122,9 @@ fi
 
 echo "Chromosome ${CHR} done"
 done
+
+if [ "${SKIP_CHR_X}" != "1" ]
+then
 
 # X_nonPAR adjusted
 CHR=X_nonPAR
@@ -131,6 +175,8 @@ ${SNPTEST} \
 ${SCRIPT_DIR}/wait-snptest.sh
 else
 echo "Skip unadjusted analysis"
+fi
+
 fi
 
 echo "Phenotype ${PHENO} done"

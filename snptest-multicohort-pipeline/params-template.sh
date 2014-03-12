@@ -38,6 +38,12 @@ ADDITIONAL_COVARIATE_TYPES=""
 # skip unadjusted analysis (0/1)
 SKIP_UNADJUSTED_ANALYSIS="0"
 
+# skip X chromosome (SNPtest crashes at the moment)
+SKIP_CHR_X="1"
+
+# use phenotype normalization (0) or turn it off (1)
+RAW_PHENOTYPES="0"
+
 ##### COHORTS
 
 # Cohort Names
