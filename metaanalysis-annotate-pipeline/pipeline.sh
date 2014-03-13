@@ -20,4 +20,5 @@ mkdir -p ${LOG_DIR}
 . ${SCRIPT_DIR}/03-filter.sh
 . ${SCRIPT_DIR}/04-add-pos.sh
 . ${SCRIPT_DIR}/05-annovar.sh
+. ${SCRIPT_DIR}/06-filter-sort.sh
 
