@@ -40,13 +40,16 @@ prepare_sample <- function(fn)
   fam$PHENO <- NULL
   fam$B <- NULL
   fam$MISSING = 0
+  fam$IDX = 1:nrow(fam)
   print(dim(fam))
   print(head(fam))
   
-  samp <- merge(fam, data, all.x=T)
+  samp <- merge(fam, data, all.x=T, by=c("IID", "FID", "SEX"))
   print(dim(samp))
   print(head(samp))
-
+  samp=samp[order(samp$IDX),]
+  samp$IDX = NULL
+  
   if(nrow(samp)!=nrow(fam)) {
     print("sample and fam file must have same length - invalid phenotype file")
     quit(status=99)
