@@ -13,8 +13,13 @@ dim(data)
 # SNP     chr     position        coded_all       noncoded_all    strand_genome   beta    SE      pval    AF_coded_all    HWE_pval      callrate n_total imputed used_for_imp    oevar_imp
 
 print("reformat")
-data2 = data.frame(SNP=data$SNP, CHR=data$chr, BP=data$position, P=data$pval)
+data2 = data.frame(SNP=data$SNP, CHR=data$chr, BP=data$position, P=data$pval, EAF=data$AF_coded_all)
 head(data2)
+
+print("MAF filter 10%")
+print(nrow(data2))
+data2 = data2[which(data2$EAF >= 0.1 & data2$EAF <= 0.9),]
+print(nrow(data2))
 
 print(paste("make plot", outfn))
 png(outfn, width=2400, height=1400)

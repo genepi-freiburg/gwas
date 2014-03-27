@@ -62,6 +62,8 @@ prepare_sample <- function(fn)
   for (pheno in unlist(strsplit(phenos, " "))) {
     print(paste("add pheno =", pheno))
     result[,pheno] = samp[,pheno]
+    print("summary of this pheno")
+    print(summary(result[,pheno]))
   }
   if (nchar(add_covars) > 0) {
     print(paste("add_covars =", add_covars))

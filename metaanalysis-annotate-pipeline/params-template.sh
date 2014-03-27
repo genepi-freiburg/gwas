@@ -38,3 +38,9 @@ GROUPS_TURKS="turks_4c turks_escape"
 MAF=0.01
 MINN=50
 
+# options for genomic correction
+# specify "-gc" to employ GC for input
+# specify "-gco" to employ GC for output
+# specify "-gc -gco" for double GC
+GC_OPTS="-gc -gco"
+

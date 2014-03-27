@@ -2,3 +2,5 @@
   or even better pass map file to gwama to get positions in output file
 
 - maybe better configuration of MAF filter (different per phenotype)
+
+- GC conf / calcs

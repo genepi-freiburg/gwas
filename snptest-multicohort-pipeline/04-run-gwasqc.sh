@@ -25,6 +25,8 @@ do
 		echo "PROCESS ${FN}.gwas" >> gwasqc.in.txt
 	done
 
+	# wait for previous xvfb to die
+	sleep 3
 	xvfb-run Rscript ${SCRIPT_DIR}/04-gwasqc.R
 
 	echo "Removing GWAS data links"

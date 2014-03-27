@@ -39,14 +39,15 @@ do
 MY_SNPTEST_FILE=`echo ${SNPTEST_OUTPUT_FILE} | sed s/%ADJ%/${ADJ}/g | sed s/%PHEN%/${PHEN}/g | sed s/%CHR%/${CHR}/g | sed s/%COHORT%/${FN}/g`
 MY_GWAMA_FILE="${DATA_DIR}/input/${PHEN}/${FN}-${ADJ}-chr${CHR}.gwama"
 
-if [ -f "${MY_GWAMA_FILE}" ]
-then
-	echo "Exists/Skip: ${FN} ${ADJ} ${PHEN} Chr ${CHR}" | tee -a ${LOG_FILE}
-else
+#if [ -f "${MY_GWAMA_FILE}" ]
+#then
+#	echo "Exists/Skip: ${FN} ${ADJ} ${PHEN} Chr ${CHR}" | tee -a ${LOG_FILE}
+#else
 	echo "Convert ${FN} ${ADJ} ${PHEN} Chr ${CHR}: ${MY_SNPTEST_FILE} -> ${MY_GWAMA_FILE}" | tee -a ${LOG_FILE}
+	rm -f ${MY_GWAMA_FILE}
 	perl ${SCRIPT} ${MY_SNPTEST_FILE} ${MY_GWAMA_FILE} ${PHEN_TYP_CODE} MAF=${MAF} N=${MINN} &
 	${SCRIPT_DIR}/wait-perl.sh
-fi
+#fi
 
 #CHR
 done
@@ -56,14 +57,14 @@ wait
 
 MY_PHEN_OUT_DIR="${DATA_DIR}/input/${PHEN}"
 echo "Merging ${PHEN} ${FN} ${ADJ}, dir: ${MY_PHEN_OUT_DIR}" | tee -a ${LOG_FILE}
-mv ${MY_PHEN_OUT_DIR}/${FN}-${ADJ}-chr1.gwama ${MY_PHEN_OUT_DIR}/${FN}-${ADJ}.gwama
+cp ${MY_PHEN_OUT_DIR}/${FN}-${ADJ}-chr1.gwama ${MY_PHEN_OUT_DIR}/${FN}-${ADJ}.gwama
 #CHRS="2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X_nonPAR"
 CHRS="2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22"
 for CHR in ${CHRS}
 do
 cat ${MY_PHEN_OUT_DIR}/${FN}-${ADJ}-chr${CHR}.gwama | tail -n+2 >>${MY_PHEN_OUT_DIR}/${FN}-${ADJ}.gwama
 done
-#rm -v ${MY_PHEN_OUT_DIR}/${FN}-${ADJ}-chr*.gwama
+rm -v ${MY_PHEN_OUT_DIR}/${FN}-${ADJ}-chr*.gwama
 
 # ADJ
 done

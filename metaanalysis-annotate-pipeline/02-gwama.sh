@@ -26,7 +26,6 @@ do
 
 echo ${PHEN} ${ADJ} ${GROUP}
 
-
 GWAMA_IN_FILE="${DATA_DIR}/input/${PHEN}/gwama-${GROUP}-${ADJ}.in"
 rm -f ${GWAMA_IN_FILE}
 touch ${GWAMA_IN_FILE}
@@ -46,7 +45,12 @@ GWAMA_OUT_DIR="${DATA_DIR}/output/${PHEN}"
 GWAMA_OUT_FILE="${GWAMA_OUT_DIR}/gwama-${GROUP}-${ADJ}"
 mkdir -p ${GWAMA_OUT_DIR}
 
-${GWAMA} ${PHEN_TYP_CODE} -gc -gco \
+if [ "${GC_OPTS}" == "" ]
+then
+	GC_OPTS="-gc -gco"
+fi
+
+${GWAMA} ${PHEN_TYP_CODE} ${GC_OPTS} \
 	-i ${GWAMA_IN_FILE} \
 	-o ${GWAMA_OUT_FILE} \
 	--indel_alleles \
