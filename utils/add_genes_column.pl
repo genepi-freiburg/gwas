@@ -46,9 +46,11 @@ while (<ANNO>) {
 
     print("Process line $lc\n");
 
-    my @line_arr = split(/\t/, $line);
+    my @line_arr = split(/[\t ]/, $line);
     my $chr = $line_arr[$chrCol];
     my $pos = $line_arr[$posCol];
+
+    print("Search for gene at Chromosome $chr and Pos $pos\n");
 
     $sth->execute($chr, $pos, $pos);
 

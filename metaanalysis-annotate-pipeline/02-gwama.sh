@@ -1,4 +1,8 @@
 ADJS="unadjusted adjusted"
+if [ "${SKIP_UNADJUSTED}" == "1" ]
+then
+        ADJS="adjusted"
+fi
 
 GWAMA_LOG_DIR="${DATA_DIR}/log"
 mkdir -p ${GWAMA_LOG_DIR}

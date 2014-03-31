@@ -4,6 +4,10 @@ LOG_FILE=${LOG_DIR}/convert-snptest.log
 touch ${LOG_FILE}
 
 ADJS="unadjusted adjusted"
+if [ "${SKIP_UNADJUSTED}" == "1" ]
+then
+	ADJS="adjusted"
+fi
 
 PHEN_TYPE_ARRAY=(${PHENOTYPE_TYPES})
 PHEN_IDX=0

@@ -2,15 +2,19 @@ args <- commandArgs(trailingOnly = TRUE)
 
 infn=args[1]
 outfn=args[2]
+phenot=args[3]
+
 data = read.table(infn)
 
-binary = FALSE
+binary = phenot == "B"
 if (!binary) {
+  print("quantitative")
   colnames(data) = c("FUNC", "GENES", "CHR", "START", "END", "REF", "OBS", "RSID",
                      "ALL1", "ALL2", "EAF", "BETA", "SE", "BETA_95L", "BETA_95U",
                      "Z", "PVAL", "LOG10PVAL", "QSTAT", "QPVAL", "I2", "N_STUD",
                      "N_SAMP", "EFFECTS")
 } else {
+  print("binary")
   colnames(data) = c("FUNC", "GENES", "CHR", "START", "END", "REF", "OBS", "RSID",
                      "ALL1", "ALL2", "EAF", "OR", "OR_SE", "OR_95L", "OR_95U",
                      "Z", "PVAL", "LOG10PVAL", "QSTAT", "QPVAL", "I2", "N_STUD",
