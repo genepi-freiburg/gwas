@@ -1,0 +1,30 @@
+# Column names
+ALLELE   coded_all noncoded_all
+CALLRATE callrate
+CHR	 chr
+EFFECT	 beta
+STDERR		SE
+FREQLABEL	AF_coded_all
+IMPUTED		imputed
+IMP_QUALITY	oevar_imp
+USED_FOR_IMP	used_for_imp
+MARKER		SNP
+N		n_total
+POSITION	position
+PVALUE		pval
+HWE_PVAL	HWE_pval
+STRAND		strand_genome
+
+SEPARATOR	TAB
+
+# params
+MAF	0.05	0.1
+IMP	0.5	0.8
+
+# Prefix for output files
+PREFIX	 qc-
+
+# Column N controls the width of boxplots
+#BOXPLOTWIDTH	    N
+
+# Input files and its short name for plotting
