@@ -23,8 +23,8 @@ my $sth = $dbh->prepare("select geneName, chrom, min(txStart), max(txEnd) from
 open(ANNO, $annofile) or die "Cannot open Annovar file!\n";
 open(OUT, ">" . $outfile) or die "Cannot open out file to write!\n";
 
-my $chrCol = 0;
-my $posCol = 1;
+my $chrCol = 1;
+my $posCol = 2;
 if ($#ARGV > 1) {
 	$chrCol = $ARGV[1];
 	$posCol = $ARGV[2];
