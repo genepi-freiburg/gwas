@@ -11,12 +11,19 @@ do
         do
 		echo "Format ${COHORT} ${CHR}"
 
-                FREQ_FILE=${FREQ_DIR}/${COHORT}-chr${CHR}.snp-freqs.txt
+                #FREQ_FILE=${FREQ_DIR}/${COHORT}-chr${CHR}.snp-freqs.txt
 
-		Rscript ${SCRIPT_DIR}/probabel2gwas.R \
-			${PROB_OUT_DIR}/${COHORT}-chr${CHR}_add.out.txt \
-			${GWAS_OUT_DIR}/${COHORT}-chr${CHR}.gwas \
-			${FREQ_FILE} &
+		#Rscript ${SCRIPT_DIR}/probabel2gwas.R \
+		#	${PROB_OUT_DIR}/${COHORT}-chr${CHR}_add.out.txt \
+		#	${GWAS_OUT_DIR}/${COHORT}-chr${CHR}.gwas \
+		#	${FREQ_FILE} &
+
+		Rscript ${SCRIPT_DIR}/gwcoxph2gwas.R \
+			${PROB_OUT_DIR}/gw-coxph-${COHORT}-chr${CHR}.txt \
+                	${GWAS_OUT_DIR}/${COHORT}-chr${CHR}.gwas \
+			${FREQ_FILE} \
+			${CHR} &
+
 	done
 
 	echo "Waiting for remaining chromosomes"

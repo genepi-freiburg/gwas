@@ -1,0 +1,4 @@
+use GWAMA
+map column names to GWAS result files
+this is a MAP file: /data/gwas/pediGFR_gwas/Metaanalysis/Imputed/map$ less ALL_1000G.map
+
