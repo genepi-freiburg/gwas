@@ -30,6 +30,7 @@ COVARIATE_FILE="${EXPERIMENT}/significant-pcs.txt"
 PC_VECTOR_SIZE="10"
 
 # additional covariates (besides AGE, SEX, E1..10; must also be contained in covariate file)
+# NEW: may be omitted from covariate file
 ADDITIONAL_COVARIATE_NAMES=""
 
 # covariate types (C = continuous, D = binary)

@@ -1,4 +1,4 @@
-CHRS="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X_nonPAR"
+CHRS="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22"
 GWAS_OUT_DIR=${DATA_DIR}/gwasqc
 PROB_OUT_DIR=${DATA_DIR}/out
 FREQ_DIR=${DATA_DIR}/freq
@@ -11,18 +11,18 @@ do
         do
 		echo "Format ${COHORT} ${CHR}"
 
-                #FREQ_FILE=${FREQ_DIR}/${COHORT}-chr${CHR}.snp-freqs.txt
+                FREQ_FILE=${FREQ_DIR}/${COHORT}-chr${CHR}.snp-freqs.txt
 
-		#Rscript ${SCRIPT_DIR}/probabel2gwas.R \
-		#	${PROB_OUT_DIR}/${COHORT}-chr${CHR}_add.out.txt \
-		#	${GWAS_OUT_DIR}/${COHORT}-chr${CHR}.gwas \
-		#	${FREQ_FILE} &
+		Rscript ${SCRIPT_DIR}/probabel2gwas.R \
+			${PROB_OUT_DIR}/${COHORT}-chr${CHR}_add.out.txt \
+			${GWAS_OUT_DIR}/${COHORT}-chr${CHR}.gwas \
+			${FREQ_FILE} &
 
-		Rscript ${SCRIPT_DIR}/gwcoxph2gwas.R \
-			${PROB_OUT_DIR}/gw-coxph-${COHORT}-chr${CHR}.txt \
-                	${GWAS_OUT_DIR}/${COHORT}-chr${CHR}.gwas \
-			${FREQ_FILE} \
-			${CHR} &
+		#Rscript ${SCRIPT_DIR}/gwcoxph2gwas.R \
+		#	${PROB_OUT_DIR}/gw-coxph-${COHORT}-chr${CHR}.txt \
+                #	${GWAS_OUT_DIR}/${COHORT}-chr${CHR}.gwas \
+		#	${FREQ_FILE} \
+		#	${CHR} &
 
 	done
 

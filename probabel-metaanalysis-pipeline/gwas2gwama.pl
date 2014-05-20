@@ -1,6 +1,6 @@
+#!/usr/bin/perl
 # Script for creating GWAMA input file from GWAS association results file. 
 # Use the script: "perl gwas2gwama.pl <GWAS output file> <output GWAMA file>"
-
 $inputfile = $ARGV[0];
 $outputfile = $ARGV[1];
 $cMAF=$cMAC=$cN=$cPROPER=0;
@@ -56,8 +56,6 @@ LINE: while(<F>)
 	}
 	$i++;
 }
-
-
 sub printhelp()
 {
 	print "Script for creating GWAMA input file from GWAS association results file.\n";

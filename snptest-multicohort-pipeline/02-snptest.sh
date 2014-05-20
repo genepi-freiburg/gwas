@@ -28,7 +28,7 @@ do
   fi
 done
 
-COV="AGE SEX ${EIGEN}"
+COV="AGE SEX ${ADDITIONAL_COVARIATE_NAMES} ${EIGEN}"
 
 for CHR in ${CHRS}
 do

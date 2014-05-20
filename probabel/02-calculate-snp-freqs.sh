@@ -20,7 +20,12 @@ do
 
 		FREQ_OUT_FILE=${FREQ_DIR}/${COHORT}-chr${CHR}.snp-freqs.txt
 
-		${SCRIPT_DIR}/calculate-snp-freqs.sh ${GEN_FILE} ${SAMPLE_FILE} ${KEEP_INDIV_FILE} ${FREQ_OUT_FILE} &
+		if [ -f ${FREQ_OUT_FILE} ];
+		then
+			echo "Frequency file exists - skip"
+		else
+			${SCRIPT_DIR}/calculate-snp-freqs.sh ${GEN_FILE} ${SAMPLE_FILE} ${KEEP_INDIV_FILE} ${FREQ_OUT_FILE} &
+		fi
 	done
 
 	echo "Wait"

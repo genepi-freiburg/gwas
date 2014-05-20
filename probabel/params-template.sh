@@ -1,7 +1,7 @@
 # this is a template file that may be copied and adjusted to your needs
 
 ##### EXECUTABLES
-PROBABEL=/data/gwas/bin/probabel-0.4.3/bin/pacoxph
+PROBABEL=/data/gwas/bin/MW/probabel-0.4.3/src/pacoxph
 
 ##### DIRECTORIES
 
