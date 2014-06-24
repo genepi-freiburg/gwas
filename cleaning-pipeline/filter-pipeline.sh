@@ -1,11 +1,19 @@
 DIR=${0%/*}
 . ${DIR}/parameters.sh
 
+OUTPUT_POSTFIX="final"
+
 FAIL_INDIV=$3
 if [ "${FAIL_INDIV}" == "" ]
 then
 	echo "Usage: $0 path basename fail-indiv-file"
 	exit 9
+fi
+
+if [ "$4" != "" ]
+then
+	OUTPUT_POSTFIX="$4"
+	echo "Using output postfix $OUTPUT_POSTFIX"
 fi
 
 INTERMED_FILE=${TEMP_DIR}/filtered
@@ -73,7 +81,7 @@ then
 	log_stats
 fi
 
-mv ${TEMP_DIR}/filtered.bed ${SOURCE_FILE}_final.bed
-mv ${TEMP_DIR}/filtered.bim ${SOURCE_FILE}_final.bim
-mv ${TEMP_DIR}/filtered.fam ${SOURCE_FILE}_final.fam
+mv ${TEMP_DIR}/filtered.bed ${SOURCE_FILE}_${OUTPUT_POSTFIX}.bed
+mv ${TEMP_DIR}/filtered.bim ${SOURCE_FILE}_${OUTPUT_POSTFIX}.bim
+mv ${TEMP_DIR}/filtered.fam ${SOURCE_FILE}_${OUTPUT_POSTFIX}.fam
 

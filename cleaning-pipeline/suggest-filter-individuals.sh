@@ -27,4 +27,4 @@ ${SCRIPT_DIR}/aux/run-IBD-QC.pl ${SOURCE_NAME} | tee -a ${MAIN_LOG_FILE}
 cd ${CWD}
 
 log "assemble results table; using PC cutoffs ${PC1_MIN}-${PC1_MAX}; ${PC2_MIN}-${PC2_MAX}, AvgDST cutoffs ${AVGDST_MIN}-${AVGDST_MAX}"
-Rscript ${SCRIPT_DIR}/filter/make-result-table.R ${RESULT_DIR} ${SOURCE_NAME} ${PC1_MIN} ${PC1_MAX} ${PC2_MIN} ${PC2_MAX} ${AVGDST_MIN} ${AVGDST_MAX}
+Rscript ${SCRIPT_DIR}/filter/make-result-table.R ${RESULT_DIR} ${SOURCE_NAME} ${PC1_MIN} ${PC1_MAX} ${PC2_MIN} ${PC2_MAX} ${AVGDST_MIN} ${AVGDST_MAX} ${TARGET_NAME}

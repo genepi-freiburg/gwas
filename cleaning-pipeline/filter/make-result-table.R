@@ -17,6 +17,12 @@ e2u = as.numeric(args[6])
 dstl = as.numeric(args[7])
 dstu = as.numeric(args[8])
 
+if (length(args) > 8) {
+  target_name = args[9]
+} else {
+  target_name = "fail-table"
+}
+
 fail_sex = read.table(paste(result_dir, "/fail-sexcheck.txt", sep=""), col.names="IID")
 fail_miss = read.table(paste(result_dir, "/fail-missingness.txt", sep=""), col.names="IID")
 
@@ -82,4 +88,4 @@ fam$P2 = NULL
 fam$X = NULL
 fail_fam = merge(fam, fail_any)
 
-write.table(fail_fam, paste(result_dir, "/fail-table.csv", sep=""), row.names=F, col.names=T, quote=T, sep=";")
+write.table(fail_fam, paste(result_dir, "/", target_name, ".csv", sep=""), row.names=F, col.names=T, quote=T, sep=";")
