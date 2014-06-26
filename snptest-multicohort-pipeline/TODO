@@ -1,0 +1,6 @@
+- besserer Parametercheck: COV_TYPES, PHEN_TYPES
+- beachte covariates.txt-File (significants-pcs.txt) auch beim Erstellen der Sample-Datei, damit keine Spalten fehlen
+- halte Pipeline an, wenn Rscript prepare-sample fehlschlaegt
+- pruefe phenotype.txt-Tabelle auf korrekte (grossgeschriebene) Spaltennamen: SEX, FID, IID (AGE)
+- lagere SEX und AGE aus, so dass sie keine "Pflichtadjustierungen" mehr sind
+
