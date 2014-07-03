@@ -2,15 +2,23 @@
 #          OUTPUT_DIR  - file to place results, intermediates and logs
 #          PREFIX      - file name prefix              e.g. whites_ckid
 #	   PC_COUNT    - number of PC's to calculate, default 10
+#	   MAF_FILTER  - MAF filter to apply, default 0 = none, give as decimal, e.g. 0.05
 # Output:  ${PREFIX}.evec and ${PREFIX}.pdf files
 
 SOURCE_FILE=$1
 OUTPUT_DIR=$2
 PREFIX=$3
 PC_COUNT=$4
+MAF_FILTER=$5
+
 if [ "${PC_COUNT}" == "" ]
 then
 	PC_COUNT=10
+fi
+
+if [ "${MAF_FILTER}" == "" ]
+then
+	MAF_FILTER=0
 fi
 
 SCRIPT_DIR=${0%/*}
