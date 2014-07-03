@@ -97,10 +97,16 @@ prepare_sample <- function(fn)
 
   print(paste("phenos", phenos, "add covars", add_covars, "es", es, 
               "pheno_types", pheno_types, "covar_types", add_covar_types, "cs", cs))
-  
-  cat(paste("ID_1 ID_2 MISSING SEX AGE", phenos, add_covars, es,
-            "\n0 0 0 D C",
-            pheno_types, add_covar_types, cs, "\n"), file=outfn)
+ 
+  if (nchar(add_covars) > 0) { 
+    cat(paste("ID_1 ID_2 MISSING SEX AGE", phenos, add_covars, es,
+              "\n0 0 0 D C",
+              pheno_types, add_covar_types, cs, "\n"), file=outfn)
+  } else {
+    cat(paste("ID_1 ID_2 MISSING SEX AGE", phenos, es,
+              "\n0 0 0 D C",
+              pheno_types, cs, "\n"), file=outfn)
+  }
   write.table(result, outfn, append=T, row.names=F, col.names=F, quote=F)
 }
 
@@ -111,5 +117,7 @@ print(head(data))
 
 fns <- strsplit(cohorts, " ")
 for (fn in unlist(fns)) {
+  print(paste("prepare", fn))
   prepare_sample(fn)
 }
+print("finished")

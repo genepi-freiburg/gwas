@@ -20,6 +20,7 @@ EIGEN=""
 EIGENS=`cat ${COVARIATE_FILE} | grep ${FN} | grep ^${PHEN} | cut -f 3 -d ' '`
 for EIG in ${EIGENS}
 do
+  # TODO pruefe ob EIG schon in ADDITIONAL_COVARIATE_NAMES, dann NICHT dazu
   if [ "${EIGEN}" == "" ]
   then
     EIGEN=${EIG}
