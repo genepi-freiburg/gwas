@@ -11,6 +11,15 @@ SCRIPT_DIR=${0%/*}
 # read params
 . ${1}
 
+if [ "${EXPERIMENT}" != "" ]
+then
+	if [ ! -d "${EXPERIMENT}" ]
+	then
+		echo "Experiment directory does not exist: ${EXPERIMENT}"
+		exit
+	fi
+fi
+
 LOG_DIR=${DATA_DIR}/log
 mkdir -p ${DATA_DIR}
 mkdir -p ${LOG_DIR}
@@ -19,7 +28,7 @@ mkdir -p ${LOG_DIR}
 . ${SCRIPT_DIR}/01-prepare-sample.sh
 
 # check return code
-if [ $? != 0 ]
+if [ "$RC" != 0 ]
 then
 	echo "Sample file formatting failed - check logs"
 	exit
