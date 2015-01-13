@@ -21,7 +21,7 @@ mkdir -p ${LOG_DIR}
 # check return code
 if [ $? != 0 ]
 then
-	echo "Sample file formatting failed"
+	echo "Sample file formatting failed - check logs"
 	exit
 fi
 

@@ -3,6 +3,7 @@ export FAM_PATH
 export DATA_DIR
 export PHENOTYPE_NAMES
 export PHENOTYPE_FILE
+export COVARIATE_FILE
 export COHORTS
 export PHENOTYPE_TYPES
 export PC_VECTOR_SIZE

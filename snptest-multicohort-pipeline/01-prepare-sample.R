@@ -7,6 +7,7 @@ phen_name = Sys.getenv("PHENOTYPE_FILE")
 cohorts = Sys.getenv("COHORTS")
 pheno_types = Sys.getenv("PHENOTYPE_TYPES")
 eigen_dim = Sys.getenv("PC_VECTOR_SIZE")
+cov_name = Sys.getenv("COVARIATE_FILE")
 
 if (is.na(add_covars)) {
   add_covars = ""
@@ -16,9 +17,19 @@ if (is.na(add_covar_types)) {
   add_covar_types = ""
 }
 
-if (length(strsplit(phenos," ")) != length(strsplit(pheno_types," "))) {
+if (length(strsplit(phenos," ")) != length(strsplit(pheno_types, " "))) {
   print("phenotype_names and phenotype_types must be of same length!")
   quit(status=98)
+}
+
+acnl=length(strsplit(add_covars, " "))
+actl=length(strsplit(add_covar_types, " "))
+if (acnl == 1 & add_covars == "") { acnl = 0 }
+if (actl == 1 & add_covar_types == "") { actl = 0 }
+print(paste("acn '", add_covars, "', ", acnl, "; act '", add_covar_types, "', ", actl, sep=""))
+if (acnl != actl) {
+  print("add_covar_names and add_covar_types must be of same length!")
+  quit(status=96)
 }
 
 if (nchar(add_covars > 0) | nchar(add_covar_types) > 0) {
@@ -27,6 +38,16 @@ if (nchar(add_covars > 0) | nchar(add_covar_types) > 0) {
     quit(status=99)
   }
 }
+
+# check COV file
+print(paste("read covariate file '", cov_name, "'", sep=""))
+cov_tab = read.table(cov_name, sep=" ", h=F)
+if (ncol(cov_tab) != 3) {
+	print("invalid covariate file (significant-pcs.txt)")
+	quit(status=89)
+}
+colnames(cov_tab) = c("PHENO", "FILE", "COV")
+summary(cov_tab)
 
 prepare_sample <- function(fn) 
 {
@@ -44,13 +65,29 @@ prepare_sample <- function(fn)
   print(dim(fam))
   print(summary(fam))
 
-  print("merge FAM with phenotype data")  
+  # merge without SEX to check for SEX mismatches
+  samp <- merge(fam, data, all.x=T, by=c("IID", "FID")) # omit SEX
+
+  if (("SEX.x" %in% colnames(samp)) & nrow(subset(samp, samp$SEX.x != samp$SEX.y)) > 0) {
+	print("SEX mismatches! problems merging FAM file and phenotype data")
+	print("Problematic rows:")
+	print(subset(samp, samp$SEX.x != samp$SEX.y))
+	quit(status=101)
+  }
+
+  # final merge (including SEX)
+  print("merge FAM with phenotype data")
   samp <- merge(fam, data, all.x=T, by=c("IID", "FID", "SEX"))
   print(dim(samp))
   print(summary(samp))
 
-  print("NA ages:")
-  print(subset(samp, is.na(samp$AGE)))
+  na_ages = subset(samp, is.na(samp$AGE))
+  if (nrow(na_ages) > 0) {
+  	print("NA ages:")
+	print(subset(samp, is.na(samp$AGE)))
+  } else {
+	print("No NA ages - great!")
+  }
 
   print("order sample in FAM order")
   samp=samp[order(samp$IDX),]
@@ -75,6 +112,12 @@ prepare_sample <- function(fn)
     print(paste("add_covars =", add_covars))
     for (covar in unlist(strsplit(add_covars, " "))) {
       result[,covar] = samp[,covar]
+
+      # check
+      if (covar %in% cov_tab$COV) {
+	print(paste("ERROR: covar", covar, "in additional_covariables must not be in covariates file!"))
+	quit(status=101)
+      }
     }
   }
   for (i in seq(1,eigen_dim)) {
@@ -122,16 +165,44 @@ dim(data)
 print(summary(data))
 
 if (is.na(which(colnames(data) == "SEX"))) {
-	print("ERROR: 'SEX' column required in phenotype data. Must match FAM sex column!")
+	print("ERROR: 'SEX' column (upper case) required in phenotype data. Must match FAM sex column!")
+	quit(status=90)
 }
 if (is.na(which(colnames(data) == "AGE"))) {
-	print("ERROR: 'AGE' column required in phenotype data.")
+	print("ERROR: 'AGE' column (upper case) required in phenotype data.")
+	quit(status=91)
 }
 
 fns <- strsplit(cohorts, " ")
-for (fn in unlist(fns)) {
-  print(paste("prepare", fn))
-  prepare_sample(fn)
+
+# check covars file
+for (i in 1:nrow(cov_tab)) {
+	pheno = cov_tab[i, "PHENO"]
+	fn = cov_tab[i, "FILE"]
+	cov = cov_tab[i, "COV"]
+        if (!(pheno %in% colnames(data))) {
+                print(paste("phenotype name", pheno, "from covar file not found in data"))
+		quit(status=92)
+        }
+	if (!(pheno %in% unlist(strsplit(phenos, " ")))) {
+		print(paste("phenotype name", pheno, "from covar file not found in phenos parameter"))
+		quit(status=95)
+	}
+	if (!(fn %in% fns)) {
+		print(paste("group name", fn, "not found in 'cohorts'"))
+		quit(status=93)
+	}
+	if (!(cov %in% colnames(data))) {
+		print(paste("covariate name", cov, "not found in data"))
+		quit(status=94)
+	}
+	print(paste("cov row correct; pheno", pheno, "group", fn, "cov", cov))
 }
 
-print("finished")
+print ("INITIAL CHECKS SUCCEEDED - PREPARE DATA")
+
+for (fn in unlist(fns)) {
+	prepare_sample(fn)
+}
+
+print("finished SUCCESSFULLY")
