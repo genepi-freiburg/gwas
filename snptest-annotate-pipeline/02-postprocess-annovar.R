@@ -19,6 +19,8 @@ colnames(data) = c(
         "PVAL",
         "AF_OBS",
         "HWE_PVAL",
+	"CASES_HWE_PVAL",
+	"CONTROLS_HWE_PVAL",
         "CALLRATE",
         "N_TOTAL",
         "IMPUTED"

@@ -25,6 +25,9 @@ then
 	exit
 fi
 
+echo "Proceed?"
+read
+
 # SNPtest
 . ${SCRIPT_DIR}/02-snptest.sh
 

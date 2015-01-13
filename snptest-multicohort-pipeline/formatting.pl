@@ -11,7 +11,7 @@ sub round {
 my %opts;
 getopt('ioc', \%opts);
 if (!exists $opts{'i'} or !exists $opts{'o'}) {
-    print "Usage: $0 -i input_file -f output_file [-c chromosome_number]\nConverts SNPtest 2.5 .out file to a .gwas file.\n";
+    print "Usage: $0 -i input_file -o output_file [-c chromosome_number]\nConverts SNPtest 2.5 .out file to a .gwas file.\n";
     exit;
 }
 
@@ -31,7 +31,7 @@ if (exists $opts{'c'}) {
 open(INPUT, $opts{'i'}) or die "Input file not found!\n";
 open(OUTPUT, ">" . $opts{'o'}) or die "Cannot open output file for writing!\n";
 
-my $i = 0, my $pcol = -1, my $hwepcol = -1;
+my $i = 0, my $pcol = -1, my $hwepcol = -1, my $casesHweCol = -1, my $controlsHweCol = -1;
 my @header;
 my $skipped = 0, my $included = 0;
 
@@ -52,7 +52,17 @@ while (<INPUT>) {
 	  die "No P value found in header!\n" if $pcol < 1;
 	  $hwepcol = $Hwepcol;
 	  die "No HWE P value found in header!\n" if $hwepcol < 1;
-	  print OUTPUT "SNP\tchr\tposition\tcoded_all\tnoncoded_all\tstrand_genome\tbeta\tSE\tpval\tAF_coded_all\tHWE_pval\tcallrate\tn_total\timputed\tused_for_imp\toevar_imp\n";
+	  my ( $casesHweColX ) = grep { $header[$_] =~ /cases_hwe/ } 0..$#header;
+	  if ($casesHweColX) { $casesHweCol = $casesHweColX; }
+	  my ( $controlsHweColX ) = grep { $header[$_] =~ /controls_hwe/ } 0..$#header;
+	  if ($controlsHweColX) { $controlsHweCol = $controlsHweColX; }
+	  if ($casesHweCol > -1 && $controlsHweCol > -1) {
+	    print "Output HWE p-value separately for cases/controls as well.\n";
+	    print OUTPUT "SNP\tchr\tposition\tcoded_all\tnoncoded_all\tstrand_genome\tbeta\tSE\tpval\tAF_coded_all\tHWE_pval\tcallrate\tn_total\timputed\tused_for_imp\toevar_imp\tcases_hwe\tcontrols_hwe\n";
+	  } else {
+	    print "Only overall HWE p-value output.\n";
+	    print OUTPUT "SNP\tchr\tposition\tcoded_all\tnoncoded_all\tstrand_genome\tbeta\tSE\tpval\tAF_coded_all\tHWE_pval\tcallrate\tn_total\timputed\tused_for_imp\toevar_imp\n";
+	  }
 	} else {
 	  my $pval = $data[$pcol];
 	  if ($pval ne "NA" && $pval >= 0) {
@@ -88,7 +98,12 @@ while (<INPUT>) {
 	    my $used_for_imp = 1 - $imputed;
 	    my $oevar_imp = $data[8];
 
-	    print OUTPUT "$SNP\t$chr\t$position\t$coded_all\t$noncoded_all\t$strand_genome\t$beta\t$SE\t$pval\t$AF_coded_all\t$HWE_pval\t$callrate\t$n_total\t$imputed\t$used_for_imp\t$oevar_imp\n";
+	    print OUTPUT "$SNP\t$chr\t$position\t$coded_all\t$noncoded_all\t$strand_genome\t$beta\t$SE\t$pval\t$AF_coded_all\t$HWE_pval\t$callrate\t$n_total\t$imputed\t$used_for_imp\t$oevar_imp\t";
+	    if ($casesHweCol > -1 && $controlsHweCol > -1) {
+	      print OUTPUT $data[$casesHweCol]. "\t" . $data[$controlsHweCol] . "\n";
+	    } else {
+	      print OUTPUT "\n";
+	    }
 	    $included++;
 	  } else {
 	    $skipped++;

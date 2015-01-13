@@ -7,6 +7,11 @@ data = read.table(infile, h=T)
 data$coded_all = as.character(data$coded_all)
 data$noncoded_all = as.character(data$noncoded_all)
 
+if (!("cases_hwe" %in% colnames(data))) {
+	data$cases_hwe = NA
+	data$controls_hwe = NA
+}
+
 out = data.frame(
 	CHR=data$chr,
 	START=data$position,
@@ -19,6 +24,8 @@ out = data.frame(
 	PVAL=data$pval,
 	AF_OBS=data$AF_coded_all,
 	HWE_PVAL=data$HWE_pval,
+	CASES_HWE_PVAL=data$cases_hwe,
+	CONTROLS_HWE_PVAL=data$controls_hwe,
         CALLRATE=data$callrate,
 	N_TOTAL=data$n_total,
 	IMPUTED=data$imputed

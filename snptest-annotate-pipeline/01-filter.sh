@@ -1,5 +1,5 @@
 #SNP     chr     position        coded_all       noncoded_all    strand_genome   beta    SE      pval    AF_coded_all    HWE_pval        callrate        n_total imputed used_for_imp    oevar_imp
-
+#  danach: cases_hwe controls_hwe wenn moeglich
 
 ADJS="adjusted unadjusted"
 if [ "${SKIP_UNADJUSTED}" == 1 ]

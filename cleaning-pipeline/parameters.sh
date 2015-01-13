@@ -47,7 +47,8 @@ MAIN_LOG_FILE=${LOG_DIR}/main.log
 SOURCE_NOF_FILE=${SOURCE_FILE}_nof
 SUMMARY_FILE=${RESULT_DIR}/summary.txt
 
-PLINK=/usr/lib/plink/plink
+#PLINK=/usr/lib/plink/plink
+PLINK=/data/gwas/bin/plink-1.90b2/plink
 CONVERTF=/opt/eigenstrat/bin/convertf
 SMARTPCA=/opt/eigenstrat/bin/smartpca
 

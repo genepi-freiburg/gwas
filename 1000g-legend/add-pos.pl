@@ -30,7 +30,7 @@ sub lookup
 
 # main program
 while (<>) {
-	my @fields = split(/\t/);
+	my @fields = split(/[\t ]/);
 	chomp($fields[$#fields]);
 	my @pos = lookup($fields[$rsidx]);
 	push(@fields, @pos);

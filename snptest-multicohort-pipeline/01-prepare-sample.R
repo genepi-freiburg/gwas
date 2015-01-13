@@ -42,11 +42,17 @@ prepare_sample <- function(fn)
   fam$MISSING = 0
   fam$IDX = 1:nrow(fam)
   print(dim(fam))
-  print(head(fam))
-  
+  print(summary(fam))
+
+  print("merge FAM with phenotype data")  
   samp <- merge(fam, data, all.x=T, by=c("IID", "FID", "SEX"))
   print(dim(samp))
-  print(head(samp))
+  print(summary(samp))
+
+  print("NA ages:")
+  print(subset(samp, is.na(samp$AGE)))
+
+  print("order sample in FAM order")
   samp=samp[order(samp$IDX),]
   samp$IDX = NULL
   
@@ -113,11 +119,19 @@ prepare_sample <- function(fn)
 print(paste("read phenotypes", phen_name))
 data <- read.table(phen_name, h=T)
 dim(data)
-print(head(data))
+print(summary(data))
+
+if (is.na(which(colnames(data) == "SEX"))) {
+	print("ERROR: 'SEX' column required in phenotype data. Must match FAM sex column!")
+}
+if (is.na(which(colnames(data) == "AGE"))) {
+	print("ERROR: 'AGE' column required in phenotype data.")
+}
 
 fns <- strsplit(cohorts, " ")
 for (fn in unlist(fns)) {
   print(paste("prepare", fn))
   prepare_sample(fn)
 }
+
 print("finished")

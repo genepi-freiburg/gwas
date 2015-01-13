@@ -3,14 +3,35 @@
 use strict;
 
 my $p_border = 1E-4;
+my $hwe_border = 1E-5;
+my $maf_border = 0.01;
+
 #print("border = $p_border\n");
 
 my $i = 0;
 while(<>) {
 	my @fields = split(/\t/);
 	if ($i > 0) {
+		my $omit = 0;
 		if($fields[8] < $p_border) {
-			print(join("\t",@fields));
+			if ($#fields > 16) {
+				# have cases/controls hwe
+				if ($fields[17] < $hwe_border) {
+					$omit = 1;
+				}
+			} else {
+				# have only overall hwe
+				if ($fields[10] < $hwe_border) {
+					$omit = 1;
+				}
+			}
+			my $af = $fields[9]; 
+			if ($af < $maf_border || $af > 1-$maf_border) {
+				$omit = 1;
+			}
+			if ($omit == 0) {
+				print(join("\t",@fields));
+			}
 		}
 	}
 	$i++;
