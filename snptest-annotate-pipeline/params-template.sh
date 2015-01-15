@@ -6,11 +6,11 @@ ANNOVAR=/opt/annovar
 ##### DIRECTORIES
 
 # Prefixes (only for this file)
-DIR_PREFIX="/data/gwas/pediGFR_gwas"
-DATA_DIR="${DIR_PREFIX}/dbGAP_CaseControl/Association/20130902-annotate/out"
+DIR_PREFIX="/data/gwas/XXXXX"
+DATA_DIR="${DIR_PREFIX}/annotate"
 
 # SNPtest output
-SNPTEST_OUTPUT_DIR="${DIR_PREFIX}/dbGAP_CaseControl/Association/20130830/out"
+SNPTEST_OUTPUT_DIR="${DIR_PREFIX}/out"
 SNPTEST_OUTPUT_FILE="${SNPTEST_OUTPUT_DIR}/%PHEN%/%ADJ%/%COHORT%.gwas"
 
 ##### PHENOTYPE
@@ -24,8 +24,20 @@ PHENOTYPE_NAMES="PHENO"
 ALL_COHORTS="Data"
 
 ##### FILTERS
-MINP=1E-6
+# p-value filter border (only keep p values less than the border)
+P_BORDER=1E-4
 
+# HWE p-value filter border (only keep HWE p values bigger than the border)
+HWE_BORDER=1E-5
+
+# MAF (minor allele frequency) border (only keep MAFs above the border)
+MAF_BORDER=0.01
+
+##### PARAMETERS
+
+# make a Manhattan plot (this takes some time)
+# (plot uses MAF 10% filter, this may need to be enhanced)
 DO_PLOT=0
 
+# skip unadjusted analyses
 SKIP_UNADJUSTED=0

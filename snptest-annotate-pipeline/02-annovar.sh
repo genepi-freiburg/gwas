@@ -32,7 +32,7 @@ do
 	        -protocol ${PROTOCOLS} \
 	        -operation ${OPERATION} 
 
-	# hier waere mehr Formatierung (Spaltenkoepfe! Tab vs. Whitespace) gut
+	# mehr Formatierung (Spaltenkoepfe! Tab vs. Whitespace)
 	Rscript ${SCRIPT_DIR}/02-postprocess-annovar.R ${ANNFILE}.refGene.variant_function ${DATA_DIR}/annovar-${COHORT}-${PHENO}-${ADJ}.out.txt
 done
 done

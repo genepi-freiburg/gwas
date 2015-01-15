@@ -5,10 +5,6 @@ then
 	ADJS="adjusted"
 fi
 
-#CHRS="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X_nonPAR"
-CHRS="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22"
-# there is another CHRS statement further down!!
-
 export PROCESS_LIMIT
 
 FORMATTING_LOG="${DATA_DIR}/log/formatting.log"
@@ -55,9 +51,9 @@ do
 
 	echo "Combine ${FN} ${ADJ} ${PHEN}" | tee -a ${FORMATTING_LOG}
 
-	cat ${DATA_DIR}/${PHEN}/${ADJ}/${FN}-chr1.gwas >${DATA_DIR}/${PHEN}/${ADJ}/${FN}.gwas
-	#CHRS="2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X_nonPAR"
-	CHRS="2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22"
+	FIRST_FILE=`ls ${DATA_DIR}/${PHEN}/${ADJ}/${FN}-chr*.gwas | head -n 1`
+	echo "First file (for header) is: $FIRST_FILE"
+	head -n 1 ${FIRST_FILE} >${DATA_DIR}/${PHEN}/${ADJ}/${FN}.gwas
 	for CHR in ${CHRS}
 	do
 		sed -e '1d' ${DATA_DIR}/${PHEN}/${ADJ}/${FN}-chr${CHR}.gwas \

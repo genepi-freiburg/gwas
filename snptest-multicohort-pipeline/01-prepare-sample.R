@@ -41,12 +41,19 @@ if (nchar(add_covars > 0) | nchar(add_covar_types) > 0) {
 
 # check COV file
 print(paste("read covariate file '", cov_name, "'", sep=""))
-cov_tab = read.table(cov_name, sep=" ", h=F)
-if (ncol(cov_tab) != 3) {
+cov_tab = data.frame(PHENO=0,FILE=0,COV=0)
+cov_tab = cov_tab[-1,]
+if (file.info(cov_name)$size > 0) {
+  cov_tab = read.table(cov_name, sep=" ", h=F)
+  if (ncol(cov_tab) != 3) {
 	print("invalid covariate file (significant-pcs.txt)")
-	quit(status=89)
+  	quit(status=89)
+  }
+  colnames(cov_tab) = c("PHENO", "FILE", "COV")
+} else {
+  print("empty COV table")
+  colnames(cov_tab) = c("PHENO", "FILE", "COV")
 }
-colnames(cov_tab) = c("PHENO", "FILE", "COV")
 summary(cov_tab)
 
 prepare_sample <- function(fn) 
@@ -176,6 +183,7 @@ if (is.na(which(colnames(data) == "AGE"))) {
 fns <- strsplit(cohorts, " ")
 
 # check covars file
+if (nrow(cov_tab)>0) {
 for (i in 1:nrow(cov_tab)) {
 	pheno = cov_tab[i, "PHENO"]
 	fn = cov_tab[i, "FILE"]
@@ -197,6 +205,7 @@ for (i in 1:nrow(cov_tab)) {
 		quit(status=94)
 	}
 	print(paste("cov row correct; pheno", pheno, "group", fn, "cov", cov))
+}
 }
 
 print ("INITIAL CHECKS SUCCEEDED - PREPARE DATA")

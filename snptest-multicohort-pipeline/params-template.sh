@@ -44,6 +44,10 @@ SKIP_CHR_X="1"
 # use phenotype normalization (0) or turn it off (1)
 RAW_PHENOTYPES="1"
 
+# calculate only certain chromosomes (space delimited)
+# empty/not set = calculate all 22 chromosomes (and X, if not SKIP_CHR_X)
+#ONLY_CHRS="4"
+
 ##### COHORTS/GROUPS
 
 # Cohort Names

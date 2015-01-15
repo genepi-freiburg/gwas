@@ -27,4 +27,4 @@ colnames(data) = c(
 )
 summary(data)
 
-write.table(data, outfile, row.names=F, col.names=T, quote=F)
+write.table(data, outfile, row.names=F, col.names=T, quote=T, sep="\t")

@@ -16,13 +16,13 @@ do
 for ADJ in ${ADJS}
 do
 
-	echo "Filter ${PHENO} ${FN} ${ADJ}"
+	echo "Filter ${PHENO} ${FN} ${ADJ}, min p ${MINP}"
 	INFN=`echo ${SNPTEST_OUTPUT_FILE} | sed s/%ADJ%/${ADJ}/g | sed s/%PHEN%/${PHENO}/g | sed s/%COHORT%/${FN}/g`
 	OUT_DIR="${DATA_DIR}"
 	OUT_FN="${OUT_DIR}/filtered-${FN}-${PHENO}-${ADJ}.gwas"
 	mkdir -p ${OUT_DIR}
 	head -n 1 ${INFN} > ${OUT_FN}
-	export MINP
+	export P_BORDER HWE_BORDER MAF_BORDER
 	echo "Infile: ${INFN}, Outfile: ${OUT_FN}"
 	cat ${INFN} | perl ${SCRIPT_DIR}/filter.pl >> ${OUT_FN} &
 
@@ -34,4 +34,9 @@ done
 
 echo Waiting for last jobs
 wait
-
+RC=$?
+if [ "$RC" != "0" ];
+then
+	echo "Error filtering files!"
+	exit 9
+fi

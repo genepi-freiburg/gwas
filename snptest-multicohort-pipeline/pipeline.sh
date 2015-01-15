@@ -37,6 +37,22 @@ fi
 echo "Proceed?"
 read
 
+# determine chromosomes
+if [ "${SKIP_CHR_X}" == "0" ]
+then
+	CHRS="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X_nonPAR"
+else
+	CHRS="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22"
+fi
+
+if [ "${ONLY_CHRS}" != "" ]
+then
+	CHRS="${ONLY_CHRS}"
+fi
+export CHRS
+
+echo "Chromosome List: ${CHRS}"
+
 # SNPtest
 . ${SCRIPT_DIR}/02-snptest.sh
 

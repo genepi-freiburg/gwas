@@ -2,11 +2,22 @@
 
 use strict;
 
-my $p_border = 1E-4;
-my $hwe_border = 1E-5;
-my $maf_border = 0.01;
+my $p_border = $ENV{"P_BORDER"};
+if (!$p_border) {
+	$p_border = 1E-4;
+}
 
-#print("border = $p_border\n");
+my $hwe_border = $ENV{"HWE_BORDER"};
+if (!$hwe_border) {
+	$hwe_border = 1E-5;
+}
+
+my $maf_border = $ENV{"MAF_BORDER"};
+if (!$maf_border) {
+	$maf_border = 0.01;
+}
+
+print STDERR "p-border = $p_border, hwe-border = $hwe_border, maf-border $maf_border\n";
 
 my $i = 0;
 while(<>) {
