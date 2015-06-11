@@ -9,10 +9,15 @@ do
 for ADJ in ${ADJS}
 do
 
+	if [ "$MANHATTAN_MAF_FILTER" == "" ]
+	then
+		MANHATTAN_MAF_FILTER=0.05
+	fi
+
         echo "Plot ${PHENO} ${FN} ${ADJ}"
         INFN=`echo ${SNPTEST_OUTPUT_FILE} | sed s/%ADJ%/${ADJ}/g | sed s/%PHEN%/${PHENO}/g | sed s/%COHORT%/${FN}/g`
         OUT_FN="${DATA_DIR}/manhattan-${FN}-${PHENO}-${ADJ}.png"
-	xvfb-run Rscript ${SCRIPT_DIR}/03-plot.R ${INFN} ${SCRIPT_DIR} ${OUT_FN} 
+	xvfb-run Rscript ${SCRIPT_DIR}/03-plot.R ${INFN} ${SCRIPT_DIR} ${OUT_FN} ${MANHATTAN_MAF_FILTER}
 	wait 3
 
 done

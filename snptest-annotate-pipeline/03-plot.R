@@ -2,6 +2,7 @@ args = commandArgs(trailingOnly = TRUE)
 infile = args[1]
 scriptdir = args[2]
 outfn = args[3]
+maf = args[4]
 
 print(infile)
 
@@ -16,9 +17,9 @@ print("reformat")
 data2 = data.frame(SNP=data$SNP, CHR=data$chr, BP=data$position, P=data$pval, EAF=data$AF_coded_all)
 head(data2)
 
-print("MAF filter 10%")
+print(paste("MAF filter", maf))
 print(nrow(data2))
-data2 = data2[which(data2$EAF >= 0.1 & data2$EAF <= 0.9),]
+data2 = data2[which(data2$EAF >= maf & data2$EAF <= 1-maf),]
 print(nrow(data2))
 
 print(paste("make plot", outfn))

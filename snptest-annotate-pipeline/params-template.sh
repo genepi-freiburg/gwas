@@ -36,8 +36,10 @@ MAF_BORDER=0.01
 ##### PARAMETERS
 
 # make a Manhattan plot (this takes some time)
-# (plot uses MAF 10% filter, this may need to be enhanced)
-DO_PLOT=0
+DO_PLOT=1
+
+# use 5% MAF filter for Manhatten plot
+MANHATTAN_MAF_FILTER=0.05
 
 # skip unadjusted analyses
 SKIP_UNADJUSTED=0
