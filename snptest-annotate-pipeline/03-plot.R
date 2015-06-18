@@ -2,7 +2,7 @@ args = commandArgs(trailingOnly = TRUE)
 infile = args[1]
 scriptdir = args[2]
 outfn = args[3]
-maf = args[4]
+maf = as.numeric(args[4])
 
 print(infile)
 
@@ -16,6 +16,7 @@ dim(data)
 print("reformat")
 data2 = data.frame(SNP=data$SNP, CHR=data$chr, BP=data$position, P=data$pval, EAF=data$AF_coded_all)
 head(data2)
+rm(data)
 
 print(paste("MAF filter", maf))
 print(nrow(data2))

@@ -17,7 +17,7 @@ if (is.na(add_covar_types)) {
   add_covar_types = ""
 }
 
-if (length(strsplit(phenos," ")) != length(strsplit(pheno_types, " "))) {
+if (length(unlist(strsplit(phenos," "))) != length(unlist(strsplit(pheno_types, " ")))) {
   print("phenotype_names and phenotype_types must be of same length!")
   quit(status=98)
 }
