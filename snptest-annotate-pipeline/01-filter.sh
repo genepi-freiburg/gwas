@@ -55,7 +55,7 @@ do
 	echo "Find independent SNPs for ${PHENO} ${FN} ${ADJ}"
 	INFN="${OUT_DIR}/filtered-${FN}-${PHENO}-${ADJ}.gwas"
 	OUTFN="${OUT_DIR}/independent-${FN}-${PHENO}-${ADJ}.txt"
-	Rscript ${SCRIPT_DIR}/myindep.R ${INFN} ${OUTFN} ${SCRIPT_DIR}
+	Rscript ${SCRIPT_DIR}/myindep.R ${INFN} ${OUTFN} ${SCRIPT_DIR} 2>&1 | tee ${LOG_DIR}/indep-${FN}-${PHENO}-${ADJ}.log
 
 	LZDIR="${OUT_DIR}/locuszoom/${PHENO}/${FN}_${ADJ}"
 	mkdir -p "${LZDIR}"
@@ -68,12 +68,14 @@ do
 	echo "Before MAF 5% filter"
 	wc -l $GWAS_FILE
 
-	head -n 1 ${GWAS_FILE} > ${FILTER_FILE}
+#SNP	chr	position	coded_all	noncoded_all	strand_genome	beta	SE	pval	AF_coded_all	HWE_pval	callrate	n_total	imputed	used_for_imp	oevar_imp
+
+	echo "#CHROM	BEGIN	END	MARKER_ID	NS	AC	CALLRATE	MAF	PVALUE	SCORE" > ${FILTER_FILE} 
 	cat ${GWAS_FILE} | \
-        awk '{ if ($10 > 0.05 && $10 < 0.95) { print } }' \
+        awk '{ if ($10 > 0.05 && $10 < 0.95) { print $2, "\t", $3, "\t", $3+length(4)-1, "\t", $1, "\t\t\t", $12, "\t", $10, "\t", $9, "\t" } }' \
         >> ${FILTER_FILE}
 
-	echo "After MAF 5% filter"
+	echo "After MAF 5% filter and EPACTS conversion"
 	wc -l $FILTER_FILE
 
 	echo "Plotting"
@@ -81,16 +83,24 @@ do
 
 	SAVEDIR=`pwd`
 	cd $LZDIR
-	${LZ}   --metal ${FILTER_FILE} \
-        	--markercol SNP \
-        	--pvalcol pval \
+	${LZ}   --epacts ${FILTER_FILE} \
         	--hitspec ${HITSPEC} \
         	--pop EUR \
         	--build hg19 \
         	--source 1000G_March2012 \
         	--gwas-cat whole-cat_significant-only \
         	--plotonly \
-        	metalRug=SNPs
+        	metalRug=SNPs 2>&1 | tee ${LOG_DIR}/locuszoom-${FN}-${PHENO}-${ADJ}.log
+
+	PDFS=`ls *.pdf`
+	PDF_FNS=""
+	for PDF in $PDFS
+	do	
+		PDF_FNS="${PDF_FNS}${PDF} 1 "
+	done
+	echo "Jam PDFs: ${PDF_FNS}"
+	pdfjam -o ${FN}-${PHENO}-${ADJ}_LocusZoom.pdf ${PDF_FNS}
+
 	cd $SAVEDIR	
 done
 done
