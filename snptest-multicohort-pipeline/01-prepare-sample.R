@@ -180,7 +180,8 @@ if (is.na(which(colnames(data) == "AGE"))) {
 	quit(status=91)
 }
 
-fns <- strsplit(cohorts, " ")
+fns <- unlist(strsplit(cohorts, " "))
+print(paste("fns", fns))
 
 # check covars file
 if (nrow(cov_tab)>0) {
