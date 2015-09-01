@@ -43,3 +43,12 @@ MANHATTAN_MAF_FILTER=0.05
 
 # skip unadjusted analyses
 SKIP_UNADJUSTED=0
+
+# make LocusZoom plots
+DO_LZ=1
+
+# Locus Zoom LD Source ("1000G_March2012" or "1000G_Nov2014")
+LZ_SOURCE="1000G_March2012"
+
+# MAF filter before running LocusZoom
+LZ_MAF_FILTER=0.05

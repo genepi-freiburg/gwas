@@ -21,5 +21,10 @@ mkdir -p ${LOG_DIR}
 
 if [ "${DO_PLOT}" != 0 ]
 then
-. ${SCRIPT_DIR}/03-plot.sh
+    . ${SCRIPT_DIR}/03-plot.sh
+fi
+
+if [ "${DO_LZ}" != 0 ]
+then
+    . ${SCRIPT_DIR}/04-locuszoom.sh
 fi
