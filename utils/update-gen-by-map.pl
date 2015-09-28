@@ -28,8 +28,12 @@ if ($genName =~ /\.gz$/) {
 }
 
 open MAP, $mapName or die "Unable to open MAP file: $!";
-open OUT, ">$outName" or die "Unable to create output GEN file: $!";
 
+if ($outName =~ /\.gz/) {
+	open OUT, "| gzip > $outName" or die "Unable to create output GEN file: $!";
+} else {
+	open OUT, ">$outName" or die "Unable to create output GEN file: $!";
+}
 
 #########################
 # read MAP
