@@ -31,7 +31,7 @@ if (exists $opts{'c'}) {
 open(INPUT, $opts{'i'}) or die "Input file not found!\n";
 open(OUTPUT, ">" . $opts{'o'}) or die "Cannot open output file for writing!\n";
 
-my $i = 0, my $pcol = -1, my $hwepcol = -1, my $casesHweCol = -1, my $controlsHweCol = -1;
+my $i = 0, my $pcol = -1, my $hwepcol = -1, my $casesHweCol = -1, my $controlsHweCol = -1, my $casesMafCol = -1, my $controlsMafCol = -1;
 my @header;
 my $skipped = 0, my $included = 0;
 
@@ -56,11 +56,16 @@ while (<INPUT>) {
 	  if ($casesHweColX) { $casesHweCol = $casesHweColX; }
 	  my ( $controlsHweColX ) = grep { $header[$_] =~ /controls_hwe/ } 0..$#header;
 	  if ($controlsHweColX) { $controlsHweCol = $controlsHweColX; }
+	  my ( $casesMafColX ) = grep { $header[$_] =~ /cases_maf/ } 0..$#header;
+          if ($casesMafColX) { $casesMafCol = $casesMafColX; }
+	  my ( $controlsMafColX ) = grep { $header[$_] =~ /controls_maf/ } 0..$#header;
+          if ($controlsMafColX) { $controlsMafCol = $controlsMafColX; }
+
 	  if ($casesHweCol > -1 && $controlsHweCol > -1) {
-	    print "Output HWE p-value separately for cases/controls as well.\n";
-	    print OUTPUT "SNP\tchr\tposition\tcoded_all\tnoncoded_all\tstrand_genome\tbeta\tSE\tpval\tAF_coded_all\tHWE_pval\tcallrate\tn_total\timputed\tused_for_imp\toevar_imp\tcases_hwe\tcontrols_hwe\n";
+	    print "Output HWE p-value and MAF separately for cases/controls as well.\n";
+	    print OUTPUT "SNP\tchr\tposition\tcoded_all\tnoncoded_all\tstrand_genome\tbeta\tSE\tpval\tAF_coded_all\tHWE_pval\tcallrate\tn_total\timputed\tused_for_imp\toevar_imp\tcases_hwe\tcontrols_hwe\tcases_maf\tcontrols_maf\n";
 	  } else {
-	    print "Only overall HWE p-value output.\n";
+	    print "Only overall HWE p-value and MAF output.\n";
 	    print OUTPUT "SNP\tchr\tposition\tcoded_all\tnoncoded_all\tstrand_genome\tbeta\tSE\tpval\tAF_coded_all\tHWE_pval\tcallrate\tn_total\timputed\tused_for_imp\toevar_imp\n";
 	  }
 	} else {
@@ -100,7 +105,7 @@ while (<INPUT>) {
 
 	    print OUTPUT "$SNP\t$chr\t$position\t$coded_all\t$noncoded_all\t$strand_genome\t$beta\t$SE\t$pval\t$AF_coded_all\t$HWE_pval\t$callrate\t$n_total\t$imputed\t$used_for_imp\t$oevar_imp\t";
 	    if ($casesHweCol > -1 && $controlsHweCol > -1) {
-	      print OUTPUT $data[$casesHweCol]. "\t" . $data[$controlsHweCol] . "\n";
+	      print OUTPUT $data[$casesHweCol]. "\t" . $data[$controlsHweCol] . "\t" . $data[$casesMafCol] . "\t" . $data[$controlsMafCol] . "\n";
 	    } else {
 	      print OUTPUT "\n";
 	    }
