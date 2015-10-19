@@ -39,6 +39,7 @@ if (nchar(add_covars > 0) | nchar(add_covar_types) > 0) {
   }
 }
 
+
 # check COV file
 print(paste("read covariate file '", cov_name, "'", sep=""))
 cov_tab = data.frame(PHENO=0,FILE=0,COV=0)
@@ -127,7 +128,8 @@ prepare_sample <- function(fn)
       }
     }
   }
-  for (i in seq(1,eigen_dim)) {
+  print(paste("eigen_dim", eigen_dim))
+  for (i in 1:eigen_dim) {
     pc = paste("E",i,sep="")
     result[,pc]=samp[,pc]
   }

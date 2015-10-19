@@ -39,7 +39,7 @@ do
   fi
 done
 
-if [ ${NO_AGE_ADJUST} == 1 ]
+if [ "${NO_AGE_ADJUST}" == "1" ]
 then
 	COV="SEX ${ADDITIONAL_COVARIATE_NAMES} ${EIGEN}"
 else
