@@ -49,6 +49,8 @@ print STDOUT "Read " . $counter . " SNPs from MAP file.\n";
 #########################
 
 $counter = 0;
+my $simplifiedCounter = 0, my $mappedCounter = 0;
+
 while (<GWAS>) {
 	my @line = split(/\s/);
 	if ($counter == 0) {
@@ -71,6 +73,7 @@ while (<GWAS>) {
         } else {
 		# successfully mapped	
 		$line[0] = $rsId2;
+		$mappedCounter++;
 	}
 
 	chomp($line[$#line]);
@@ -81,6 +84,7 @@ while (<GWAS>) {
 		if ($rsId1 =~ /(rs[0-9]+):/) {
 			#print STDERR "normalized $rsId1 to: $1\n";
 			$line[0] = $1;
+			$simplifiedCounter++;
 		}
 	}
 
@@ -89,6 +93,8 @@ while (<GWAS>) {
 }
 
 print STDOUT "Wrote " . ($counter-1) . " SNPs to output file.\n";
+print STDOUT "Simplified " . ($simplifiedCounter) . " RS identifiers.\n";
+print STDOUT "Successfully mapped " . ($mappedCounter) . " RS identifiers.\n";
 
 close(GWAS);
 close(OUT);
