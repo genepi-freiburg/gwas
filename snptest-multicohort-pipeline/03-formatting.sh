@@ -65,4 +65,38 @@ done
 done
 done
 
+if [ "${SNP_TRANSLATION_TABLE}" != "" ]
+then
+
+echo "Add RSID alias column, translate using ${SNP_TRANSLATION_TABLE}" >>${FORMATTING_LOG}
+echo "Add RSID alias column, translate using ${SNP_TRANSLATION_TABLE}"
+
+for PHEN in ${PHENOTYPE_NAMES}
+do
+for FN in ${COHORTS}
+do
+for ADJ in ${ADJS}
+do
+
+GWAS_FN="${DATA_DIR}/${PHEN}/${ADJ}/${FN}.gwas"
+echo "Working with: ${GWAS_FN}"
+
+mv "${GWAS_FN}" "${GWAS_FN}.orig"	
+${SCRIPT_DIR}/../utils/update-gwas-by-map.pl \
+	-g "${GWAS_FN}.orig" \
+	-m "${SNP_TRANSLATION_TABLE}" \
+	-o "${GWAS_FN}" \
+	-s
+
+done
+done
+done
+
+else
+
+echo "No RSID translation" >>${FORMATTING_LOG}
+echo "No RSID translation"
+
+fi
+
 echo "Done" | tee -a ${FORMATTING_LOG}

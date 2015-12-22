@@ -48,6 +48,10 @@ RAW_PHENOTYPES="1"
 # empty/not set = calculate all 22 chromosomes (and X, if not SKIP_CHR_X)
 #ONLY_CHRS="4"
 
+# translate KGP identifiers for GCKD map
+# leave empty to skip step
+SNP_TRANSLATION_TABLE="/data/gwas/dbSNP142_ucsc/Matthias/kgp_translation_table_short.txt"
+
 ##### COHORTS/GROUPS
 
 # Cohort Names
