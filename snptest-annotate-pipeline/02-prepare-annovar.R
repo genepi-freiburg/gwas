@@ -3,7 +3,7 @@ infile = args[1]
 outfile = args[2]
 print(paste(infile, outfile))
 
-data = read.table(infile, h=T)
+data = read.table(infile, h=T, colClasses="character") 
 data$coded_all = as.character(data$coded_all)
 data$noncoded_all = as.character(data$noncoded_all)
 
@@ -15,7 +15,7 @@ if (!("cases_hwe" %in% colnames(data))) {
 out = data.frame(
 	CHR=data$chr,
 	START=data$position,
-	END=data$position + nchar(data$noncoded_all) - 1,
+        END=as.numeric(data$position) + nchar(data$noncoded_all) - 1,
 	REF=data$noncoded_all,
 	OBS=data$coded_all,
 	SNP=data$SNP,
