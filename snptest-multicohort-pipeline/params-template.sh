@@ -35,6 +35,10 @@ ADDITIONAL_COVARIATE_NAMES=""
 # covariate types (C = continuous, D = binary), space delimited
 ADDITIONAL_COVARIATE_TYPES=""
 
+# SNPs to condition on (format as in SNPtest condition_on option, e.g. "rs1332 add")
+# works only with adjusted analyses (unadjusted analyses don't use "condition_on")
+CONDITION_ON_SNP=""
+
 # skip unadjusted analysis (0/1)
 SKIP_UNADJUSTED_ANALYSIS="1"
 

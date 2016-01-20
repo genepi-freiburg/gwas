@@ -12,6 +12,13 @@ else
         USE_RAW_PHENOTYPES=""
 fi
 
+if [ "${CONDITION_ON}" != "" ]
+then
+	CONDITION_OPTION="-condition_on ${CONDITION_ON}"
+else
+	CONDITION_OPTION=""
+fi
+
 for FN in ${COHORTS}
 do
 
@@ -61,6 +68,7 @@ echo "Using SAMPLE file: ${DATA_DIR}/sample/${FN}.sample"
 	
 #-total_prob_limit 0 \
 
+# SNPtest AUTOSOMAL ADJUSTED
 ${SNPTEST} \
         -data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
         -o ${DATA_DIR}/${PHEN}/adjusted/${FN}-chr${CHR}.out \
@@ -72,7 +80,7 @@ ${SNPTEST} \
         -assume_chromosome ${CHR} \
         -cov_names ${COV} \
         -log ${DATA_DIR}/log/snptest-${PHEN}-adjusted-${FN}-chr${CHR}.log \
-	${USE_RAW_PHENOTYPES} \
+	${USE_RAW_PHENOTYPES} ${CONDITION_OPTION} \
         >/dev/null &
 
 ${SCRIPT_DIR}/wait-snptest.sh
@@ -81,6 +89,7 @@ if [ "${SKIP_UNADJUSTED_ANALYSIS}" != "1" ]
 then
 	echo "Unadjusted Analysis: ${FN} / ${PHEN}"
 
+	# SNPtest AUTOSOMAL UNADJUSTED
 	${SNPTEST} \
         	-data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
         	-o ${DATA_DIR}/${PHEN}/unadjusted/${FN}-chr${CHR}.out \
@@ -115,6 +124,7 @@ echo "Analysis with Covariate Adjustment: ${COV}"
 echo "Using GEN file: ${GENFILE}"
 echo "Using SAMPLE file: ${DATA_DIR}/sample/${FN}.sample"
 
+# SNPtest X chromosome ADJUSTED
 ${SNPTEST} \
         -data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
         -o ${DATA_DIR}/${PHEN}/adjusted/${FN}-chr${CHR}.out \
@@ -127,7 +137,7 @@ ${SNPTEST} \
         -lower_sample_limit 50 \
         -cov_names ${COV} \
         -log ${DATA_DIR}/log/snptest-${PHEN}-adjusted-${FN}-chr${CHR}.log \
-	${USE_RAW_PHENOTYPES} \
+	${USE_RAW_PHENOTYPES} ${CONDITION_OPTION} \
         >/dev/null &
 
 ${SCRIPT_DIR}/wait-snptest.sh
@@ -136,6 +146,7 @@ if [ "${SKIP_UNADJUSTED_ANALYSIS}" != "1" ]
 then
 	echo "Unadjusted Analysis (ChrX)"
 
+	# SNPtest X chromosome UNADJUSTED
 	${SNPTEST} \
         -data ${GENFILE} ${DATA_DIR}/sample/${FN}.sample \
         -o ${DATA_DIR}/${PHEN}/unadjusted/${FN}-chr${CHR}.out \
