@@ -3,7 +3,7 @@ infile = args[1]
 outfile = args[2]
 print(paste(infile, outfile))
 
-data = read.table(infile, h=F, sep="")
+data = read.table(infile, h=F, sep="", colClasses="character") 
 
 colnames(data) = c(
         "FUNC",
