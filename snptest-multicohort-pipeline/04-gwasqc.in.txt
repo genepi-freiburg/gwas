@@ -8,7 +8,8 @@ FREQLABEL	AF_coded_all
 IMPUTED		imputed
 IMP_QUALITY	oevar_imp
 USED_FOR_IMP	used_for_imp
-MARKER		SNP
+#MARKER		SNP
+MARKER		ORIG_RSID
 N		n_total
 POSITION	position
 PVALUE		pval
