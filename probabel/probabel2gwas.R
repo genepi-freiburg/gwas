@@ -3,6 +3,12 @@ infn = args[1]
 outfn = args[2]
 freqfn = args[3]
 
+if (length(args) > 3) {
+	freqmap = args[4]
+} else {
+	freqmap = NA
+}
+
 print("read probabel result")
 probable = read.table(infn, h=T)
 summary(probable)
@@ -47,6 +53,23 @@ freq_short = data.frame(
 	INFORM=freqs$information)
 rm(freqs)
 
+if (!is.na(freqmap)) {
+	#ORIG_SNP_ID     SHORTENED_SNP_ID
+	#rs10875231:100000012:G:T        rs10875231
+	print(paste("map freq SNP names", freqmap))
+	fm = read.table(freqmap, h=T)
+	print(summary(fm))
+	freq_short2 = merge(freq_short, fm, by.x="SNP", by.y="ORIG_SNP_ID")
+	print(nrow(freq_short))
+	print(nrow(fm))
+	print(nrow(freq_short2))
+	freq_short2$SNP = NULL
+	freq_short2$SNP = freq_short2$SHORTENED_SNP_ID
+	freq_short2$SHORTENED_SNP_ID = NULL
+	freq_short = freq_short2
+	summary(freq_short)
+}
+
 final = merge(out, freq_short, all.x=T, by="SNP")
 
 final$AF_coded_all = final$A1FREQ
@@ -59,5 +82,7 @@ final$A1FREQ = NULL
 final$CALLRA = NULL
 final$IMPUTD = NULL
 final$INFORM = NULL
+
+final = final[order(final$position),]
 
 write.table(final, outfn, row.names=F, col.names=T, quote=F, sep="\t")
