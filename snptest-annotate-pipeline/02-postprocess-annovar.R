@@ -23,7 +23,8 @@ colnames(data) = c(
 	"CONTROLS_HWE_PVAL",
         "CALLRATE",
         "N_TOTAL",
-        "IMPUTED"
+        "IMPUTED",
+	"INFO"
 )
 summary(data)
 
