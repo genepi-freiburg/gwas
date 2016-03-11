@@ -24,7 +24,7 @@ while(<>) {
 	my @fields = split(/\t/);
 	if ($i > 0) {
 		my $omit = 0;
-		if($fields[8] < $p_border) {
+		if($fields[8] ne "NA" && $fields[8] < $p_border) {
 			if ($#fields > 16) {
 				# have cases/controls hwe
 				if ($fields[17] < $hwe_border) {

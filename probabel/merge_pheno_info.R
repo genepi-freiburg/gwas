@@ -11,14 +11,22 @@ print(paste("read phenotype", inphenofn))
 pheno = read.table(inphenofn, h=T)
 summary(pheno)
 
-print(paste("read individuals from dose", indosefn))
-#dose_cols = count.fields(indosefn, sep=" ")[1]
-#print(paste("found", dose_cols-2, "SNPs"))
-#info = read.table(indosefn, colClasses=c("string", rep("NULL", dose_cols-1)))
-info = read.table(pipe(paste("cut -d ' ' -f1 '", indosefn, "'", sep="")))
-colnames(info) = c("MLDOSE_IID")
-info$IID = sapply(info$MLDOSE_IID, function(x) { unlist(strsplit(as.character(x), "->"))[2] })
-info$IID = as.factor(info$IID)
+if (file.exists(indosefn) && !grepl("fvi$", indosefn)) {
+	print(paste("read individuals from dose", indosefn))
+	#dose_cols = count.fields(indosefn, sep=" ")[1]
+	#print(paste("found", dose_cols-2, "SNPs"))
+	#info = read.table(indosefn, colClasses=c("string", rep("NULL", dose_cols-1)))
+	info = read.table(pipe(paste("cut -d ' ' -f1 '", indosefn, "'", sep="")))
+	colnames(info) = c("MLDOSE_IID")
+	info$IID = sapply(info$MLDOSE_IID, function(x) { unlist(strsplit(as.character(x), "->"))[2] })
+	info$IID = as.factor(info$IID)
+} else {
+	print("try read individuals via DatABEL file")
+	library("DatABEL")
+	d = databel(indosefn)
+	info = data.frame(IID=rownames(d))
+	info$IID = as.factor(info$IID)
+}
 info$IDX = 1:nrow(info)
 summary(info)
 
