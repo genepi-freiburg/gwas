@@ -75,9 +75,19 @@ echo "Using GEN filename pattern: $GEN_PATTERN"
 SNPS=`cat $SNP_FILE`
 for SNP in $SNPS
 do
-	echo -n "Quering for chromosome number of SNP '$SNP': "
-	QUERY="select chr from snps where rsid = '${SNP}';"
-	CHR=`echo $QUERY | sqlite3 $LEGEND_DB`
+	# if line contains both SNP and chromosome number (separated by whitespace),
+	# use this chromosome number
+	ACTUAL_SNP=$(echo $CHR | cut -f1)
+	CHR=$(echo $SNP | cut -f2)
+	if [ "$CHR" == "" ]
+	then
+		echo -n "Quering for chromosome number of SNP '$SNP': "
+		QUERY="select chr from snps where rsid = '${SNP}';"
+		CHR=`echo $QUERY | sqlite3 $LEGEND_DB`
+	else
+		SNP=${ACTUAL_SNP}
+		echo -n "Found chromosome in SNP file, SNP = ${SNP}: "
+	fi
 	echo "Got ${CHR}."
 
 	# build GEN path for chromosome	
