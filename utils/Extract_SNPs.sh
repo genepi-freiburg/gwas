@@ -72,13 +72,13 @@ echo "Using GEN filename pattern: $GEN_PATTERN"
 ### EXTRACT SNPS
 #############################################
 
-SNPS=`cat $SNP_FILE`
-for SNP in $SNPS
+cat $SNP_FILE | while read SNP
 do
 	# if line contains both SNP and chromosome number (separated by whitespace),
 	# use this chromosome number
-	ACTUAL_SNP=$(echo $CHR | cut -f1)
-	CHR=$(echo $SNP | cut -f2)
+	echo "Got line: '${SNP}'"
+	ACTUAL_SNP=$(echo "$SNP" | cut -f 1)
+	CHR=$(echo "$SNP" | cut -f 2)
 	if [ "$CHR" == "" ]
 	then
 		echo -n "Quering for chromosome number of SNP '$SNP': "
