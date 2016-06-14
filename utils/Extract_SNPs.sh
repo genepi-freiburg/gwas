@@ -26,12 +26,18 @@ GEN_PATTERN=$4
 GEN_PATTERN_DEFAULT="GCKD_Common_Clean-chr%CHR%.gen.gz"
 
 NOT_FOUND_FN="${OUT_FILE}.not_found"
-FAM_FILE="GCKD_Common_Clean.fam"
+
+FAM_FILE=$5
+if [ "$FAM_FILE" == "" ]
+then
+	FAM_FILE="GCKD_Common_Clean.fam"
+fi
+
 LEGEND_DB="/data/gwas/1kgp_phase3/1000GP_Phase3/Legend_DB/ALL_1000G_Phase3_Legend.sqlite"
 
 if [ "$#" -lt "3" ]
 then
-	echo "Usage: ExtractSNPs.sh <snp_file> <gen_path> <out_file> [<gen_pattern>]"
+	echo "Usage: ExtractSNPs.sh <snp_file> <gen_path> <out_file> [<gen_pattern>] [<fam_file>]"
 	echo "Example: ./ExtractSNPs.sh snps.txt 01_Common_Genotyped_Call96_HWE5/gen snps_out.raw"
 	echo "'gen_pattern' is optional and defaults to '$GEN_PATTERN_DEFAULT'."
 	exit 8
@@ -66,7 +72,10 @@ then
 	GEN_PATTERN="$GEN_PATTERN_DEFAULT"
 fi
 echo "Using GEN filename pattern: $GEN_PATTERN"
+echo "Using FAM file: $FAM_FILE"
 
+TMP_DIR="tmp"
+mkdir -p $TMP_DIR
 
 #############################################
 ### EXTRACT SNPS
@@ -100,9 +109,9 @@ do
 	GEN=`echo ${GEN}${GEN_PATTERN} | sed s/%CHR%/${CHR}/g`
 
 	echo "Extracting SNP '$SNP' from GEN file '$GEN'"
-	zcat $GEN 2>/dev/null | grep "${SNP} " > /tmp/extract-$SNP.gen 
+	zcat $GEN 2>/dev/null | grep "${SNP} " > $TMP_DIR/extract-$SNP.gen 
 
-	if [ ! -s /tmp/extract-$SNP.gen ]
+	if [ ! -s $TMP_DIR/extract-$SNP.gen ]
 	then
 		
 		echo "WARNING: SNP $SNP not found; this is logged to '${NOT_FOUND_FN}'."
@@ -111,11 +120,11 @@ do
 done
 
 echo "Merge extracted SNPs"
-cat /tmp/extract-*.gen > /tmp/all-extracted.gen
-rm -f /tmp/extract-*.gen
+cat $TMP_DIR/extract-*.gen > $TMP_DIR/all-extracted.gen
+#rm -f $TMP_DIR/extract-*.gen
 
 echo "Convert merged file"
-Rscript Convert_Gen_to_Raw.R /tmp/all-extracted.gen $FAM_FILE $OUT_FILE
-#rm -f /tmp/all-extracted.gen
+Rscript Convert_Gen_to_Raw.R $TMP_DIR/all-extracted.gen $FAM_FILE $OUT_FILE
+#rm -f $TMP_DIR/all-extracted.gen
 
 echo "Finished"
