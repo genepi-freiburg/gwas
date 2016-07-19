@@ -36,7 +36,7 @@ else
 		--out ${TEMP_DIR}/03-merge-hapmap \
 			2>&1 >/dev/null
 
-	if [ -f ${TEMP_DIR}/03-merge-hapmap.missnp ]
+	if [ -f ${TEMP_DIR}/03-merge-hapmap-merge.missnp ]
 	then
 
 		log "merge HapMap - flip SNPs"
@@ -45,7 +45,7 @@ else
 			--noweb \
 			--bfile ${TEMP_DIR}/01-extract-hapmap-snps \
        			--extract ${SCRIPT_DIR}/aux/hapmap3r2_CEU.CHB.JPT.YRI.no-at-cg-snps.txt \
-       			--flip ${TEMP_DIR}/03-merge-hapmap.missnp \
+       			--flip ${TEMP_DIR}/03-merge-hapmap-merge.missnp \
        			--make-bed \
        			--out ${TEMP_DIR}/04-extract-hapmap-flip-snps \
 		2>&1 >/dev/null

@@ -9,5 +9,5 @@ then
 	log "Skip plotting imiss-vs-het (already done)"
 else
 	log "Plot imiss-vs-het diagram, SD = ${SD}, MISS = ${MISS}"
-	Rscript ${SCRIPT_DIR}/cleaning/04-imiss-vs-het.R ${IN} ${OUT} ${SD} ${MISS} 2>&1 >/dev/null
+	/usr/local/R/R-3.2.0/bin/Rscript ${SCRIPT_DIR}/cleaning/04-imiss-vs-het.R ${IN} ${OUT} ${SD} ${MISS} 2>&1 >/dev/null
 fi
