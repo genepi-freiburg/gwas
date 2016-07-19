@@ -109,7 +109,7 @@ do
 	GEN=`echo ${GEN}${GEN_PATTERN} | sed s/%CHR%/${CHR}/g`
 
 	echo "Extracting SNP '$SNP' from GEN file '$GEN'"
-	zcat $GEN 2>/dev/null | grep "${SNP} " > $TMP_DIR/extract-$SNP.gen 
+	zcat $GEN 2>/dev/null | grep "${SNP} " > $TMP_DIR/extract-$SNP-$CHR.gen 
 
 	if [ ! -s $TMP_DIR/extract-$SNP.gen ]
 	then
@@ -124,7 +124,7 @@ cat $TMP_DIR/extract-*.gen > $TMP_DIR/all-extracted.gen
 #rm -f $TMP_DIR/extract-*.gen
 
 echo "Convert merged file"
-Rscript Convert_Gen_to_Raw.R $TMP_DIR/all-extracted.gen $FAM_FILE $OUT_FILE
+Rscript /data/gwas/scripts/utils/Convert_Gen_to_Raw.R $TMP_DIR/all-extracted.gen $FAM_FILE $OUT_FILE
 #rm -f $TMP_DIR/all-extracted.gen
 
 echo "Finished"
