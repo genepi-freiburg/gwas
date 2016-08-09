@@ -111,7 +111,7 @@ do
 	echo "Extracting SNP '$SNP' from GEN file '$GEN'"
 	zcat $GEN 2>/dev/null | grep "${SNP} " > $TMP_DIR/extract-$SNP-$CHR.gen 
 
-	if [ ! -s $TMP_DIR/extract-$SNP.gen ]
+	if [ ! -s $TMP_DIR/extract-$SNP-$CHR.gen ]
 	then
 		
 		echo "WARNING: SNP $SNP not found; this is logged to '${NOT_FOUND_FN}'."
