@@ -101,7 +101,10 @@ while (<INPUT>) {
     $included++;
 
     # marker, chromosome number and position
-    print OUTPUT $marker . "\t";
+    my $myMarker = sprintf("%02d", $outchr) . "_" . sprintf("%09d", $data[1]) . "_" . $noncoded . "_" . $coded;
+
+    #print OUTPUT $marker . "\t";
+    print OUTPUT $myMarker . "\t";
     print OUTPUT $outchr . "\t"; # CHR
     print OUTPUT $data[1] . "\t"; # POS
 
