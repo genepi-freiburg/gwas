@@ -30,7 +30,7 @@ NOT_FOUND_FN="${OUT_FILE}.not_found"
 FAM_FILE=$5
 if [ "$FAM_FILE" == "" ]
 then
-	FAM_FILE="GCKD_Common_Clean.fam"
+	FAM_FILE="/data/gwas/gckd/04_Clean_Genotypes/GCKD_Common_Clean.fam"
 fi
 
 LEGEND_DB="/data/gwas/1kgp_phase3/1000GP_Phase3/Legend_DB/ALL_1000G_Phase3_Legend.sqlite"
