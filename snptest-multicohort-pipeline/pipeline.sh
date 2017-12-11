@@ -34,8 +34,8 @@ then
 	exit
 fi
 
-echo "Proceed?"
-read
+#echo "Proceed?"
+#read
 
 # determine chromosomes
 if [ "${SKIP_CHR_X}" == "0" ]
