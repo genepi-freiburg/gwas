@@ -56,6 +56,11 @@ RAW_PHENOTYPES="1"
 # leave empty to skip step
 SNP_TRANSLATION_TABLE="/data/gwas/dbSNP142_ucsc/Matthias/kgp_translation_table_short.txt"
 
+# replace the SNPtest info to Rsq from info files for imputation quality
+# should always do for HRC imputed analysis
+# (if you don't want this feature, remove the variable or set it to empty)
+INFO_TRANSLATION_TABLE="/data/gwas/gckd/03_Imputation/02_HRC/info_modified/chr_all.info"
+
 ##### COHORTS/GROUPS
 
 # Cohort Names
@@ -83,3 +88,5 @@ PC_VECTOR_SIZE="10"
 # Model to calculate (SNPtest frequentist parameter)
 # 1=Additive, 2=Dominant, 3=Recessive, 4=General and 5=Heterozygote
 FREQUENTIST_MODEL="1"
+
+

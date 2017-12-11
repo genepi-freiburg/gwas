@@ -99,4 +99,39 @@ echo "No RSID translation"
 
 fi
 
+if [ "${INFO_TRANSLATION_TABLE}" != "" ]
+then
+
+echo "Replace SNPtest info with Rsq for imputation quality, using ${INFO_TRANSLATION_TABLE}" >>${FORMATTING_LOG}
+echo "Replace SNPtest info with Rsq for imputation quality, using ${INFO_TRANSLATION_TABLE}"
+
+for PHEN in ${PHENOTYPE_NAMES}
+do
+for FN in ${COHORTS}
+do
+for ADJ in ${ADJS}
+do
+
+GWAS_FN="${DATA_DIR}/${PHEN}/${ADJ}/${FN}.gwas"
+echo "Working with: ${GWAS_FN}"
+
+mv "${GWAS_FN}" "${GWAS_FN}.orig1"
+${SCRIPT_DIR}/update-gwas-by-Rsq.pl \
+        -g "${GWAS_FN}.orig1" \
+        -m "${INFO_TRANSLATION_TABLE}" \
+        -o "${GWAS_FN}"
+rm "${GWAS_FN}.orig1"
+
+done
+done
+done
+
+else
+
+echo "No Rsq replacement" >>${FORMATTING_LOG}
+echo "No Rsq replacement"
+
+fi
+
+
 echo "Done" | tee -a ${FORMATTING_LOG}
