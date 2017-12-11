@@ -17,7 +17,7 @@ mkdir -p ${LOG_DIR}
 . ${SCRIPT_DIR}/01-convert-phenotype.sh
 
 echo "Phenotype Conversion DONE - check logs - OK to start?"
-read
+#read
 
 . ${SCRIPT_DIR}/02-calculate-snp-freqs.sh
 . ${SCRIPT_DIR}/03-run-probabel.sh 

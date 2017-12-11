@@ -7,6 +7,7 @@ OUT_FREQ=$4
 
 QCTOOL=/data/gwas/bin/qctool/qctool_v1.3-linux-x86_64/qctool
 GTOOL=/opt/gtool/gtool
+GTOOL=/opt/.old/gtool/gtool
 
 TEMP_DIR=/scratch/local/mw_freq_temp
 mkdir -p ${TEMP_DIR}
