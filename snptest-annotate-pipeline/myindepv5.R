@@ -11,11 +11,7 @@ source(paste(args[3], "indep1MBv5.r", sep="/"))
 
 fkt.get.indpendent.SNPs(args[1], args[2], "", "", c("pval","chr","position"))
 
-data = read.table(args[2], h=T, stringsAsFactors=F,colClasses = c("factor","integer",
-	"integer","factor","factor","factor","numeric","numeric","character","numeric",
-	"integer","numeric","numeric","numeric","factor",
-	"numeric","numeric","integer","numeric","integer",
-	"numeric","numeric","numeric","logical","logical","logical","character"))
+data = read.table(args[2], h=T, stringsAsFactors=F,colClasses = "character")
 nrow(data)
 data = subset(data, as.numeric(data$pval) < 1e-5)
 print("filter p<1e-5")
@@ -41,8 +37,8 @@ lzin = data.frame(snp=as.character(data$SNP), chr="NA", start="NA", stop="NA", f
 for (i in 1:nrow(lzin)) {
 	lzin[i,"snp"] = NA
 	lzin[i,"chr"] = data[i, "chr"]
-	lzin[i,"start"] = data[i, "position"]-500000
-	lzin[i,"stop"] = data[i, "position"]+500000
+	lzin[i,"start"] = as.integer(data[i, "position"])-500000
+	lzin[i,"stop"] = as.integer(data[i, "position"])+500000
 	if (lzin[i,"start"]<0) {
 		lzin[i,"start"] = 0
 	}

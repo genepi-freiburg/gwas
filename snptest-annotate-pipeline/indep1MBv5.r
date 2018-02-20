@@ -33,11 +33,7 @@ fkt.get.indpendent.SNPs <- function(myinputpath,myoutputpath,myinputfile,myoutpu
 	# merges position-data (chr, pos) to results-data
 	# Column.names: (p chr pos)
 # 	data<-read.table(inputfile,header=T,sep="")
-	data<-read.table(inputfile,header=T,sep="",colClasses = c("factor","integer",
-	"integer","factor","factor","factor","numeric","numeric","character","numeric",
-	"integer","numeric","numeric","numeric","factor",
-	"numeric","numeric","integer","numeric","integer",
-	"numeric","numeric","numeric","logical","logical","logical"))
+	data<-read.table(inputfile,header=T,sep="",colClasses = "character")
 # 	data <- data[1:10,]	
 	
 	names(data)[names(data)==Column.names[1]] <- "Pfkt"
@@ -46,7 +42,8 @@ fkt.get.indpendent.SNPs <- function(myinputpath,myoutputpath,myinputfile,myoutpu
 
 	
 	#print(data[1:3,])
-
+	data$chr <- as.numeric(data$chr)
+	data$pos <- as.numeric(data$pos)
 	data<-data[order(data$chr,data$pos),]
 
 	data<-cbind(data,"Indep1MB"=as.character(rep("NA",length(data[,1]))))
