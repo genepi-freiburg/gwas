@@ -29,7 +29,8 @@ for (i in 1:nrow(fam)) {
 
 print("Transpose dataset")
 result_t = t(result[,(COL_HEADER_LENGTH+1):ncol(result)])
-colnames(result_t) = paste(result[,2], result[,5], sep="_")
+# colnames(result_t) = paste(result[,2], result[,5], sep="_")
+colnames(result_t) = result[,3]
 final = cbind(row.names(result_t), result_t)
 colnames(final)[1] = "IID"
 write.table(final, out_fn, col.names=T, row.names=F, quote=F)
