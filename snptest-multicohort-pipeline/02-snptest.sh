@@ -66,6 +66,14 @@ do
 echo Processing ${FN} - ${PHEN} - Chromosome ${CHR}
 
 GENFILE=`echo ${GEN_PATH} | sed s/%CHR%/${CHR}/g | sed s/%COHORT%/${FN}/g`
+
+
+
+for ADJ in ${ADJS}
+do
+    if [ ${ADJ} == "adjusted" ]
+    then
+
 	
 echo "Analysis with Covariate Adjustment: ${COV}"
 echo "Using GEN file: ${GENFILE}"
@@ -90,6 +98,12 @@ ${SNPTEST} \
 
 ${SCRIPT_DIR}/wait-snptest.sh
 
+    fi
+
+    if [ "${ADJ}" == "unadjusted" ]
+    then
+
+
 if [ "${SKIP_UNADJUSTED_ANALYSIS}" != "1" ]
 then
 	echo "Unadjusted Analysis: ${FN} / ${PHEN}"
@@ -112,6 +126,10 @@ ${SCRIPT_DIR}/wait-snptest.sh
 else
 	echo "Skip unadjusted analysis"
 fi
+
+    fi
+done
+
 
 echo "Chromosome ${CHR} done"
 done

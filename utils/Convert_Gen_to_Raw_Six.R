@@ -11,8 +11,8 @@ print(paste("GEN file rows: ", nrow(gen), "; cols: ", ncol(gen), sep=""))
 fam = read.table(fam_fn, h=F)
 print(paste("FAM file rows: ", nrow(fam), "; cols: ", ncol(fam), sep=""))
 
-COL_HEADER_LENGTH=5
-colnames(gen)[1:COL_HEADER_LENGTH] = c("rsid","snpid","pos","all_a","all_b")
+COL_HEADER_LENGTH=6
+colnames(gen)[1:COL_HEADER_LENGTH] = c("chr", "rsid","snpid","pos","all_a","all_b")
 if (ncol(gen) - COL_HEADER_LENGTH != nrow(fam) * 3) {
 	print(paste("ERROR: GEN/FAM mismatch! GEN columns", ncol(gen) - COL_HEADER_LENGTH, "and FAM rows", nrow(fam) * 3))
 	stop(99)
@@ -29,7 +29,8 @@ for (i in 1:nrow(fam)) {
 
 print("Transpose dataset")
 result_t = t(result[,(COL_HEADER_LENGTH+1):ncol(result)])
-colnames(result_t) = paste(result[,2], result[,5], sep="_")
+# colnames(result_t) = paste(result[,2], result[,5], sep="_")
+colnames(result_t) = result[,3]
 final = cbind(row.names(result_t), result_t)
 colnames(final)[1] = "IID"
 write.table(final, out_fn, col.names=T, row.names=F, quote=F)

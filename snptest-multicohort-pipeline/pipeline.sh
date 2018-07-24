@@ -20,6 +20,12 @@ then
 	fi
 fi
 
+if [ "${ADJS}" != "unadjusted" ] && [ "${ADJS}" != "adjusted" ] && [ "${ADJS}" != "unadjusted adjusted" ] && [ "${ADJS}" != "adjusted unadjusted" ]
+then
+        echo "ADJS needs to be either unadjusted, or adjusted, or both"
+        exit
+fi
+
 LOG_DIR=${DATA_DIR}/log
 mkdir -p ${DATA_DIR}
 mkdir -p ${LOG_DIR}

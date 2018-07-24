@@ -39,8 +39,12 @@ ADDITIONAL_COVARIATE_TYPES=""
 # works only with adjusted analyses (unadjusted analyses don't use "condition_on")
 CONDITION_ON_SNP=""
 
-# skip unadjusted analysis (0/1)
-SKIP_UNADJUSTED_ANALYSIS="1"
+## skip unadjusted analysis (0/1)
+## SKIP_UNADJUSTED_ANALYSIS="1"
+
+# do adjusted analyses or unadjusted analyses or both
+# three possible options: "unadjusted" or "adjusted" or "unadjusted adjusted"
+ADJS="unadjusted"
 
 # skip X chromosome (SNPtest crashes at the moment)
 SKIP_CHR_X="1"

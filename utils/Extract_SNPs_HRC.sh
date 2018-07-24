@@ -124,7 +124,7 @@ cat $TMP_DIR/extract-*.gen > $TMP_DIR/all-extracted.gen
 #rm -f $TMP_DIR/extract-*.gen
 
 echo "Convert merged file"
-Rscript /data/programs/scripts/wuttke/gwas/utils/Convert_Gen_to_Raw.R $TMP_DIR/all-extracted.gen $FAM_FILE $OUT_FILE
+Rscript /data/gwas/scripts/wuttke/gwas/utils/Convert_Gen_to_Raw_Six.R $TMP_DIR/all-extracted.gen $FAM_FILE $OUT_FILE
 #rm -f $TMP_DIR/all-extracted.gen
 
 echo "Finished"
