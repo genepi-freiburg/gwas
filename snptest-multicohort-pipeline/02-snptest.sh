@@ -46,11 +46,16 @@ do
   fi
 done
 
+if [ "${NO_AGE_SEX_ADJUST}" == "1" ]
+then
+        COV="${ADDITIONAL_COVARIATE_NAMES} ${EIGEN}"
+else
 if [ "${NO_AGE_ADJUST}" == "1" ]
 then
 	COV="SEX ${ADDITIONAL_COVARIATE_NAMES} ${EIGEN}"
 else
 	COV="AGE SEX ${ADDITIONAL_COVARIATE_NAMES} ${EIGEN}"
+fi
 fi
 
 echo "COVARIATES for ${FN} / ${PHEN}: ${COV}"
