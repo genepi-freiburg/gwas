@@ -56,7 +56,7 @@ do
     echo "LocusZoom Dir: $LZDIR, Input file: ${PVAL_FN}, Hitspec: ${HITSPEC}"
 
     echo "Plotting"
-    LZ=/data/gwas/bin/locuszoom/bin/locuszoom
+    LZ=/data/programs/bin/gwas/locuszoom/bin/locuszoom
 
     if [ "${LZ_SOURCE}" == "" ]
     then

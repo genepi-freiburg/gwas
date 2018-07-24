@@ -30,10 +30,10 @@ NOT_FOUND_FN="${OUT_FILE}.not_found"
 FAM_FILE=$5
 if [ "$FAM_FILE" == "" ]
 then
-	FAM_FILE="/data/gwas/gckd/04_Clean_Genotypes/GCKD_Common_Clean.fam"
+	FAM_FILE="/data/studies/00_GCKD/00_data/01_genotypes/02_clean_data/GCKD_Common_Clean.fam"
 fi
 
-LEGEND_DB="/data/gwas/1kgp_phase3/1000GP_Phase3/Legend_DB/ALL_1000G_Phase3_Legend.sqlite"
+LEGEND_DB="/data/public_resources/1kgp/1kgp_phase3/1000GP_Phase3/Legend_DB/ALL_1000G_Phase3_Legend.sqlite"
 
 if [ "$#" -lt "3" ]
 then
