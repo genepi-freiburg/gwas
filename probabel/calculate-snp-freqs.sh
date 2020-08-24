@@ -5,7 +5,8 @@ IN_SAMPLE=$2
 IN_KEEP=$3 
 OUT_FREQ=$4
 
-QCTOOL=/data/gwas/bin/qctool/qctool_v1.3-linux-x86_64/qctool
+QCTOOL=/data/programs/bin/gwas/qctool/qctool_v1.3-linux-x86_64/qctool
+#/data/gwas/bin/qctool/qctool_v1.3-linux-x86_64/qctool
 GTOOL=/opt/gtool/gtool
 GTOOL=/opt/.old/gtool/gtool
 
