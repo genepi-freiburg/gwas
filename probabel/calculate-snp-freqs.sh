@@ -5,9 +5,11 @@ IN_SAMPLE=$2
 IN_KEEP=$3 
 OUT_FREQ=$4
 
-QCTOOL=/data/gwas/bin/qctool/qctool_v1.3-linux-x86_64/qctool
-GTOOL=/opt/gtool/gtool
-GTOOL=/opt/.old/gtool/gtool
+QCTOOL=/data/programs/bin/gwas/qctool/qctool_v1.3-linux-x86_64/qctool
+#/data/gwas/bin/qctool/qctool_v1.3-linux-x86_64/qctool
+#GTOOL=/opt/gtool/gtool
+#GTOOL=/opt/.old/gtool/gtool
+GTOOL=/data/programs/bin/gwas/old_tools/gtool/gtool
 
 TEMP_DIR=/scratch/local/mw_freq_temp
 mkdir -p ${TEMP_DIR}

@@ -1,4 +1,4 @@
-CHRS="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X_nonPAR"
+CHRS="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22"
 
 FREQ_DIR=${DATA_DIR}/freq
 PHENO_DIR=${DATA_DIR}/phenotypes
@@ -34,7 +34,7 @@ do
 
 	echo "Cohort ${COHORT} finished; clean-up temp"
 	rm -rf /scratch/local/mw_freq_temp
-	
+
 done
 
 echo "All cohorts finished with frequencies"

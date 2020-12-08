@@ -26,7 +26,7 @@ OUT_FILE=$4
 GEN_PATTERN=$5
 
 NOT_FOUND_FN="${OUT_FILE}.not_found"
-LEGEND_DB="/data/gwas/pediGFR_gwas/Metaanalysis/Imputed/map/ALL_1000G.sqlite"
+LEGEND_DB="/data/studies/03_PediGFR/Metaanalysis/Imputed/map/ALL_1000G.sqlite"
 
 if [ "$#" -lt "5" ]
 then
@@ -101,7 +101,6 @@ do
 
 	if [ ! -s /tmp/extract-$SNP.gen ]
 	then
-		
 		echo "WARNING: SNP $SNP not found; this is logged to '${NOT_FOUND_FN}'."
 		echo $SNP >> ${NOT_FOUND_FN}
 	fi
