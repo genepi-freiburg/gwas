@@ -56,7 +56,7 @@ do
 	echo "(This also writes LocusZoom hitspec file.)"
 	INFN="${OUT_DIR}/filtered-${FN}-${PHENO}-${ADJ}.gwas"
 	OUTFN="${OUT_DIR}/independent-${FN}-${PHENO}-${ADJ}.txt"
-	/usr/local/R/R-3.4.1/bin/Rscript ${SCRIPT_DIR}/myindepv5.R ${INFN} ${OUTFN} ${SCRIPT_DIR} 2>&1 | tee ${LOG_DIR}/indep-${FN}-${PHENO}-${ADJ}.log
+	/usr/local/R/R-3.6.1/bin/Rscript ${SCRIPT_DIR}/myindepv5.R ${INFN} ${OUTFN} ${SCRIPT_DIR} 2>&1 | tee ${LOG_DIR}/indep-${FN}-${PHENO}-${ADJ}.log
 done
 done
 done

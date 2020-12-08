@@ -27,7 +27,7 @@ do
 
 	# wait for previous xvfb to die
 	sleep 3
-	xvfb-run -a Rscript ${SCRIPT_DIR}/04-gwasqc.R
+	xvfb-run -a /usr/local/R/R-3.5.3/bin/Rscript ${SCRIPT_DIR}/04-gwasqc.R
 
 	echo "Removing GWAS data links"
 	rm *.gwas -v
